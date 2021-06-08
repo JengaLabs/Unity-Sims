@@ -4,14 +4,14 @@ using UnityEngine;
 
 
 //Sealed class refers that this is non-inheritable aka base class
-public sealed class GameManager : MonoBehaviour
+public sealed class GameManager 
 {
 
     //Hold the singleton of game manager
-    private static GameManager instance;
+    private static GameManager instance = new GameManager();
 
     //Class that holds all world states
-    private static WorldStates world;
+    private static WorldStates world = new WorldStates();
 
 
     public static GameManager Instance
@@ -24,7 +24,11 @@ public sealed class GameManager : MonoBehaviour
             if(instance == null)
             {
                 instance = new GameManager();
+
                 //Perform any code the game manager needs to like creating objects
+                world = new WorldStates();
+            
+            
             }
 
             return instance;

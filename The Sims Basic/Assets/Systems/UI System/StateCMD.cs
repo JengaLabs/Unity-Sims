@@ -25,7 +25,7 @@ public class StateCMD
     {
        
         //Store the current world states
-        worldStates = states;
+        worldStates = states.states;
         //Reset the text
         commandBox.text = "";
 
@@ -35,7 +35,7 @@ public class StateCMD
             commandBox.text += state.Key + ", " + state.Value + "\n";
 
         }
-
+       
     }
 
     

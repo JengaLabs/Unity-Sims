@@ -10,22 +10,28 @@ public class UImanager : MonoBehaviour
     //Store a Ui name and booleon for on/oof
     public Dictionary<string, bool> UIoptions;
 
-    //Store the world states 
-    private WorldStates worldStates;
+   
+    private StateCMD _stateCMD;
 
-    
+    public Text textbox;
 
 
     public void Start()
     {
+        _stateCMD = new StateCMD(textbox);
         
+        
+
+
+
     }
 
     private void Update()
     {
-        //Get the current world states
-        worldStates = GameManager.Instance.GetWorld();
 
+        //Debug.Log(GameManager.Instance.GetWorld());
+        //World state updated 
+        _stateCMD.Process(GameManager.Instance.GetWorld());
 
 
     }
