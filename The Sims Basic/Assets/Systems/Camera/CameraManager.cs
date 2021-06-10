@@ -16,10 +16,17 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         worldStates = GameManager.Instance.GetWorld();
+        currentState = new CamFree(this.gameObject);
     }
 
     private void Update()
     {
+        //Return the updated camera state
+        currentState = currentState.Process();
+
+
+
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -34,7 +41,7 @@ public class CameraManager : MonoBehaviour
             
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (worldStates.HasState("Fun"))
             {

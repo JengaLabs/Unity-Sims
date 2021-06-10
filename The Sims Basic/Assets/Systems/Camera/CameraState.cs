@@ -10,7 +10,7 @@ public class CameraState
     public enum CAMERA_STATE
     {
         PAUSED, //Enter the menu 
-        TAKEAWAY, //Standard tycoon game camera
+        TAKEAWAY, //Standard dtycoon game camera
         FREECAM, //More of a dev camera to get close up and personal
     }
     
@@ -26,7 +26,7 @@ public class CameraState
 
 
 
-    //Holds current states name
+    //Holds current states name for debuging
     public CAMERA_STATE stateName;
     //Act of the state
     protected EVENT stage;
@@ -48,6 +48,7 @@ public class CameraState
     public virtual void Enter()
     {
         stage = EVENT.UPDATE;
+        
     }
 
     //Repeating act in state
