@@ -22,11 +22,13 @@ public class CamFree : CameraState
     Camera camera;
 
     //speed multiplier camera can move at
-    short moveSpeed = 10;
+    float moveSpeed = 10;
 
     //Zoom limits
-    Vector2 FOVlimits = new Vector2(50, 70);
-    
+    Vector2 FOVlimits = new Vector2(40, 80);
+
+    //Starting height
+    float cameraHeightPos; 
 
 
     //Constructor for state
@@ -35,6 +37,7 @@ public class CamFree : CameraState
     {
         cameraObject = _camera;
         camera = Camera.main;
+        cameraHeightPos = _camera.transform.position.y;
     }
 
     public override void Enter()
@@ -57,17 +60,31 @@ public class CamFree : CameraState
         //Wasd controls for moving around 
         HorizontalInput = Input.GetAxis("Horizontal");
         VerticalInput = Input.GetAxis("Vertical");
-        
 
-        
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            moveSpeed = 25f;
+        }
+        else
+        {
+            moveSpeed = 10f;
+        }
+
 
 
         //movement
         cameraObject.transform.Translate(new Vector3(HorizontalInput, 0, VerticalInput) * moveSpeed * Time.deltaTime);
+        //Locking camera's height
+        cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, cameraHeightPos, cameraObject.transform.position.z);
+        
+        //cameraObject.transform.position += Vector3.forward * VerticalInput * moveSpeed * Time.deltaTime;
+        //cameraObject.transform.Translate(Vector3.forward * -VerticalInput * moveSpeed * Time.deltaTime);
+        //cameraObject.transform.localPosition += cameraObject.transform.forward * VerticalInput * Time.deltaTime * moveSpeed;
+
 
         //Zooming in 
         camera.fieldOfView -= Input.mouseScrollDelta.y;
-        //Check in range
+        //Check in range of FOV limits
         if(camera.fieldOfView > FOVlimits.y)
         {
             camera.fieldOfView = FOVlimits.y;
@@ -79,7 +96,7 @@ public class CamFree : CameraState
 
 
         //Rotation variables
-        float yRot = cameraObject.transform.rotation.eulerAngles.x + Input.GetAxis("Mouse Y");
+        float yRot = cameraObject.transform.rotation.eulerAngles.x - Input.GetAxis("Mouse Y");
         float xRot = cameraObject.transform.rotation.eulerAngles.y + Input.GetAxis("Mouse X");
         //Rotation being applied
         cameraObject.transform.rotation = Quaternion.Euler(yRot, xRot, 0);
@@ -88,7 +105,8 @@ public class CamFree : CameraState
         //Check for exit condition
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Escape");
+            nextState = new NormalCam(cameraObject);
+            stage = EVENT.EXIT;
         }
 
 
@@ -97,6 +115,9 @@ public class CamFree : CameraState
 
     public override void Exit()
     {
+        Debug.Log("Escape");
+
+        Cursor.lockState = CursorLockMode.Confined;
 
 
     }
