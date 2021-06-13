@@ -16,6 +16,9 @@ public sealed class GameManager
     //Hold the spawn point of the world
     private static Vector3 CameraAnchorPoint = new Vector3(0, 5, 0);
 
+    //Sends out events related to inputs 
+    private static InputClass _InputClass = new InputClass();
+
 
     public static GameManager Instance
     {
@@ -30,7 +33,7 @@ public sealed class GameManager
 
                 //Perform any code the game manager needs to like creating objects
                 world = new WorldStates();
-            
+                _InputClass = new InputClass();
             
             }
 
@@ -53,6 +56,21 @@ public sealed class GameManager
         return world;
     }
 
+
+    /// <summary>
+    /// Returns input delegate class
+    /// </summary>
+    /// <returns></returns>
+    public InputClass GetInputClass()
+    {
+        return _InputClass;
+    }
+
+
+    /// <summary>
+    /// Returns world camera spawn
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetCameraAnchorSpawnPos()
     {
         return CameraAnchorPoint;
