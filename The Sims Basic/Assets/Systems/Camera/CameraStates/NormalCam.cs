@@ -6,7 +6,10 @@ public class NormalCam : CameraState
 {
     //Moves around with wasd and click/hold and drag
     //mouse is free and can click on gui/world
-    
+
+    //Delegates to track
+    private InputClass _InputClass;
+
 
 
     //Store the camera object
@@ -24,8 +27,13 @@ public class NormalCam : CameraState
     //Starting Mouse position
     Vector2 mouseOrigin;
 
+    //Distance mouse moved
+    float mouseMoveDistance = 0f;
+
     //If mouse is being tracked for movement
-    bool mouseTracked = false;
+    bool orbitCamera = false;
+
+    //If in a text box
 
 
     //Constructor for normal cam
@@ -38,6 +46,10 @@ public class NormalCam : CameraState
 
     public override void Enter()
     {
+        //Obtain input class
+        _InputClass = GameManager.Instance.GetInputClass();
+
+
         //Event that game is in normal mode
 
         //Confine mouse to screen 
@@ -49,46 +61,41 @@ public class NormalCam : CameraState
         //For now set camera at anchor points height
         //cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, 0, cameraObject.transform.position.z);
 
+        //Subcribe to input events needed
+        _InputClass.onGuiInput += SwitchCameraOrbitBool;
+
+
         //Move to update loop
         base.Enter();
     }
 
     public override void Update()
     {
-
-        if (Input.GetMouseButtonDown(0))
+        //Check if camera should be orbiting
+        if (orbitCamera)
         {
-
-            CanInteract(Input.GetMouseButtonDown();
-            //Check if clicked object
-
-            //else drag mouse to move 
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            //Check if clicked object
-
-            //Else rotate around anchor
+            OrbitAnchor();
         }
 
         
 
 
-        //Wasd controls and shift multiplier
-        //BasicMovement();
 
-        OrbitAnchor();
+            //Wasd controls and shift multiplier
+            //BasicMovement();
 
-        LookAtAnchor();
+            //OrbitAnchor();
+
+            //LookAtAnchor();
 
 
 
-        //Switch to free cam
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            nextState = new CamFree(cameraObject);
-            stage = EVENT.EXIT;
-        }
+            //Switch to free cam
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                nextState = new CamFree(cameraObject);
+                stage = EVENT.EXIT;
+            }
 
     }
 
@@ -96,7 +103,7 @@ public class NormalCam : CameraState
     {
 
     }
-    
+
 
     /// <summary>
     /// WASD Controls to move around with shift multiplier for the anchor point
@@ -126,51 +133,51 @@ public class NormalCam : CameraState
 
     }
 
-
-
     /// <summary>
-    /// On load camera is zoomed out and eases into anchor
+    /// Switch keyboard movement to allow input from keyboard to effect anchor.
     /// </summary>
-    private void MoveToAnchor()
+    private void SwitchToKeyboardMovement()
     {
 
     }
 
+    
+
+    #region Mouse Movements
 
     /// <summary>
-    /// Hold right click and rotate around anchor
+    /// Get the mouse position on relative to the screen.
+    /// </summary>
+    void GetMousePosition()
+    {
+        mouseOrigin = Input.mousePosition;
+        mouseMoveDistance = 0;
+    }
+
+    /// <summary>
+    /// Hold right click and rotate around anchor when mouse held down.
     /// </summary>
     private void OrbitAnchor()
     {
-        //Distance mouse moved
-        float mouseDistance = 0;
+        //Make sure you already trackced the starting pos of mouse
+
         //Percentage of screen the mouse moved across
         float movedPercent;
         //Rotation multiplier
-        float rotationMultiplier = 500f;
+        float rotationMultiplier = 5000f;
 
 
-        
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            mouseOrigin = Input.mousePosition;
-            mouseDistance = 0;
-        }
-
-        //Holding right click
         if (Input.GetMouseButton(1))
         {
-            
             //Set cursor texture
             //for now just hiding it
             Cursor.visible = true;
 
             //track distance moved from orignal pos
-            mouseDistance = Input.mousePosition.x - mouseOrigin.x;
+            mouseMoveDistance = Input.mousePosition.x - mouseOrigin.x;
 
             //Find percentage of screen mouse moved across
-            movedPercent = mouseDistance / Screen.width;
+            movedPercent = mouseMoveDistance / Screen.width;
 
             //Rotate camera
             cameraObject.transform.RotateAround(anchorPoint, Vector3.up, movedPercent * Time.deltaTime * rotationMultiplier);
@@ -179,16 +186,16 @@ public class NormalCam : CameraState
             LookAtAnchor();
 
             //reset mouse orgin
-            //mouseOrigin = Input.mousePosition;
+            mouseOrigin = Input.mousePosition;
+
         }
 
-        //Stop tracking distance moved
+
+        //Check if player stops camera orbit
         if (Input.GetMouseButtonUp(1))
         {
-            
+            SwitchCameraOrbitBool();
         }
-
-
     }
 
     /// <summary>
@@ -198,42 +205,30 @@ public class NormalCam : CameraState
     {
         cameraObject.transform.LookAt(anchorPoint);
     }
-
-
-    private void MouseInputs()
+    
+    /// <summary>
+    /// Switcch camera orbit to the opposite bool.
+    /// </summary>
+    private void SwitchCameraOrbitBool()
     {
-
-        if (Input.GetMouseButtonDown(0))
+        //Reverse what orbit camera equals
+        orbitCamera = !orbitCamera;
+        if(orbitCamera == true)
         {
-
+            //Set where the mouse was at the start
+            GetMousePosition();
         }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-
-        }
-
-
     }
+
+    #endregion
 
 
     /// <summary>
-    /// Check if input given would interact with object.
+    /// On load camera is zoomed out and eases into anchor
     /// </summary>
-    /// <returns>true for can interact</returns>
-    private bool CanInteract(KeyCode inputType)
+    private void MoveToAnchor()
     {
-        Debug.Log(inputType);
 
-        //Store a raycaccst
-        RaycastHit hit;
-        //Ray ray = camera.ScreenPointToRay(Input.MousePosition);
-
-        //if(Physiccs)
-
-
-
-        return false;
     }
 
 }
