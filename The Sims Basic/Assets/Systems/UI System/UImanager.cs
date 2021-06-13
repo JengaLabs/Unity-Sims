@@ -32,7 +32,7 @@ public class UImanager : MonoBehaviour
         //Debug.Log(GameManager.Instance.GetWorld());
         //World state updated 
         _stateCMD.Process(GameManager.Instance.GetWorld());
-
+        
 
     }
 

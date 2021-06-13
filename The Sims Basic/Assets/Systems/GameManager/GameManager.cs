@@ -13,6 +13,9 @@ public sealed class GameManager
     //Class that holds all world states
     private static WorldStates world = new WorldStates();
 
+    //Hold the spawn point of the world
+    private static Vector3 CameraAnchorPoint = new Vector3(0, 5, 0);
+
 
     public static GameManager Instance
     {
@@ -48,6 +51,11 @@ public sealed class GameManager
     public WorldStates GetWorld()
     {
         return world;
+    }
+
+    public Vector3 GetCameraAnchorSpawnPos()
+    {
+        return CameraAnchorPoint;
     }
 
 

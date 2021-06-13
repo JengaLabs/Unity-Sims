@@ -77,9 +77,7 @@ public class CamFree : CameraState
         //Locking camera's height
         cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, cameraHeightPos, cameraObject.transform.position.z);
         
-        //cameraObject.transform.position += Vector3.forward * VerticalInput * moveSpeed * Time.deltaTime;
-        //cameraObject.transform.Translate(Vector3.forward * -VerticalInput * moveSpeed * Time.deltaTime);
-        //cameraObject.transform.localPosition += cameraObject.transform.forward * VerticalInput * Time.deltaTime * moveSpeed;
+        
 
 
         //Zooming in 
@@ -115,10 +113,13 @@ public class CamFree : CameraState
 
     public override void Exit()
     {
-        Debug.Log("Escape");
+        //Debug.Log("Escape");
 
+        //Keep cursor in game
         Cursor.lockState = CursorLockMode.Confined;
-
+        
+        //Reset FOV 
+        camera.fieldOfView = 60;
 
     }
 
