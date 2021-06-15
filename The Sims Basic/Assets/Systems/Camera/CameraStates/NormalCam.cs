@@ -58,8 +58,8 @@ public class NormalCam : CameraState
         //Get the camera's anchor point
         anchorPoint = GameManager.Instance.GetCameraAnchorSpawnPos();
 
-        //For now set camera at anchor points height
-        //cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, 0, cameraObject.transform.position.z);
+        //Move camera to correct position for a frame
+        LookAtAnchor();
 
         //Subcribe to input events needed
         _InputClass.onGuiInput += SwitchCameraOrbitBool;

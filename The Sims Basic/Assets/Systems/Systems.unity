@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 125354558}
   - component: {fileID: 125354557}
   - component: {fileID: 125354556}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: DebugText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,13 +285,13 @@ GameObject:
   - component: {fileID: 305684254}
   - component: {fileID: 305684256}
   - component: {fileID: 305684255}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: MenuBackDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &305684254
 RectTransform:
   m_ObjectHideFlags: 0
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 571227887}
   - component: {fileID: 571227886}
   - component: {fileID: 571227885}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,13 +584,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1110444014}
   - component: {fileID: 1110444015}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1110444014
 Transform:
   m_ObjectHideFlags: 0
@@ -989,13 +989,13 @@ GameObject:
   - component: {fileID: 2089641227}
   - component: {fileID: 2089641229}
   - component: {fileID: 2089641228}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: InGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2089641227
 RectTransform:
   m_ObjectHideFlags: 0
