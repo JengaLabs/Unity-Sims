@@ -53,7 +53,7 @@ public class NormalCam : CameraState
         //Event that game is in normal mode
 
         //Confine mouse to screen 
-        Cursor.lockState = CursorLockMode.Confined;
+       // Cursor.lockState = CursorLockMode.Confined;
 
         //Get the camera's anchor point
         anchorPoint = GameManager.Instance.GetCameraAnchorSpawnPos();
@@ -62,7 +62,7 @@ public class NormalCam : CameraState
         LookAtAnchor();
 
         //Subcribe to input events needed
-        _InputClass.onGuiInput += SwitchCameraOrbitBool;
+        _InputClass.onNothingClicked += SwitchCameraOrbitBool;
 
 
         //Move to update loop

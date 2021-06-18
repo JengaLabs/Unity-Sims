@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
     //Reports what kind of input to game managers input class delegates
 
 
+    //private GameObject selected = null;
+
 
     //Input class that input events are reported to 
     InputClass _InputClass;
@@ -20,8 +22,19 @@ public class InputManager : MonoBehaviour
     Camera mainCamera;
 
 
+    //Bit shift the index of the layer (8) to get a bit mask
+    int layerMask = 1 << 2;
+
+    //That only cast rays against colliders in layer 8
+    
+    
+
+
     void Start()
     {
+        //if you want to do everthing but 8 use
+        layerMask = ~layerMask;
+
         _InputClass = GameManager.Instance.GetInputClass();
         mainCamera = Camera.main;
 
@@ -39,16 +52,17 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             //Check if mouse down was on a UI 
-            if (!IsMouseOverInteractable())
-            {
-                //Nothing is interactable 
-                _InputClass.CallClickedNothing();
-            }
-            else
+            if (IsMouseOverInteractable())
             {
                 //Call interactable for object selected 
                 Debug.Log("Mouse down");
                 _InputClass.GUIinput();
+
+            }
+            else
+            {
+                //Nothing is interactable 
+                _InputClass.CallClickedNothing();
 
             }
 
@@ -83,17 +97,59 @@ public class InputManager : MonoBehaviour
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, raycastResults);
 
-        //Loop over what was hit
+        
+
+        //Loop over what UI was hit
         for (int i = 0; i < raycastResults.Count; i++)
         {
-            //switch statement for what to do for each layer 
-            Debug.Log(raycastResults[i]);
+            //switch statement for what to do for each layer
+            switch (raycastResults[i].gameObject.layer)
+            {
+                //Check for game layer
+                case 0:
+                    Debug.Log(raycastResults[i].gameObject.name + " this is nothing");
+                    break;
+                case 2:
+                    //This is ignored
+                    Debug.Log(raycastResults[i].gameObject.name + " this is ignored");
+                    break;
+                case 5:
+                    Debug.Log(raycastResults[i].gameObject.name + " is a ui");
+                    //Call the interactable script 
+                    return true;
+                    break;
+                
+            }
+
+
         }
 
         #endregion
 
-        #region Check for gameobject that was hit 
+        #region Check for gameobjects that were hit 
 
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer 
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
+            
+            //Debug.Log(hit.transform.gameObject.layer);
+            switch (hit.transform.gameObject.layer)
+            {
+                case 0:
+                    Debug.Log(hit.transform.gameObject.name + " this is nothing");
+                    return false;
+                    break;
+                case 8:
+                    Debug.Log(hit.transform.gameObject.name + " this is an interactable");
+                    //Set object as selected one
+                    return true;
+                    break;
+            }
+        }
+        #endregion
 
 
         return false;
