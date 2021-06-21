@@ -22,17 +22,17 @@ public class InputManager : MonoBehaviour
     Camera mainCamera;
 
 
-    //Bit shift the index of the layer (8) to get a bit mask
+    //Bit shift the index of the layer (2) to get a bit mask
     int layerMask = 1 << 2;
+    //That only cast rays against colliders in layer 2
 
-    //That only cast rays against colliders in layer 8
-    
-    
+
+
 
 
     void Start()
     {
-        //if you want to do everthing but 8 use
+        //if you want to check everthing but the declared layer use
         layerMask = ~layerMask;
 
         _InputClass = GameManager.Instance.GetInputClass();
@@ -49,6 +49,7 @@ public class InputManager : MonoBehaviour
     void Update()
     {
 
+        //Right clicked
         if (Input.GetMouseButtonDown(1))
         {
             //Check if mouse down was on a UI 
@@ -71,14 +72,22 @@ public class InputManager : MonoBehaviour
         }
 
 
-
+        //Left clicked
         if (Input.GetMouseButtonDown(0))
         {
             //Check what was hit
-           
+            if (IsMouseOverInteractable())
+            {
+
+            }
             
         }
 
+        //Temp Resume / Pause
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _InputClass.CallTogglePause();
+        }
 
 
 

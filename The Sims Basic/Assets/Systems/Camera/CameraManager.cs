@@ -16,7 +16,7 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         worldStates = GameManager.Instance.GetWorld();
-        currentState = new CamFree(this.gameObject);
+        currentState = new CamPaused(this.gameObject);
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class CameraManager : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (worldStates.HasState("Dead"))
             {

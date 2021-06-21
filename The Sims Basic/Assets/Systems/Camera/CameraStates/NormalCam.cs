@@ -53,7 +53,7 @@ public class NormalCam : CameraState
         //Event that game is in normal mode
 
         //Confine mouse to screen 
-       // Cursor.lockState = CursorLockMode.Confined;
+        // Cursor.lockState = CursorLockMode.Confined;
 
         //Get the camera's anchor point
         anchorPoint = GameManager.Instance.GetCameraAnchorSpawnPos();
@@ -63,6 +63,8 @@ public class NormalCam : CameraState
 
         //Subcribe to input events needed
         _InputClass.onNothingClicked += SwitchCameraOrbitBool;
+
+        _InputClass.onTogglePause += PauseGame;
 
 
         //Move to update loop
@@ -77,31 +79,32 @@ public class NormalCam : CameraState
             OrbitAnchor();
         }
 
-        
 
 
 
-            //Wasd controls and shift multiplier
-            //BasicMovement();
 
-            //OrbitAnchor();
+        //Wasd controls and shift multiplier
+        //BasicMovement();
 
-            //LookAtAnchor();
+        //OrbitAnchor();
+
+        //LookAtAnchor();
 
 
 
-            //Switch to free cam
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                nextState = new CamFree(cameraObject);
-                stage = EVENT.EXIT;
-            }
+        //Switch to free cam
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            nextState = new CamFree(cameraObject);
+            stage = EVENT.EXIT;
+        }
 
     }
 
     public override void Exit()
     {
-
+        _InputClass.onNothingClicked -= SwitchCameraOrbitBool;
+        _InputClass.onTogglePause -= PauseGame;
     }
 
 
@@ -141,7 +144,7 @@ public class NormalCam : CameraState
 
     }
 
-    
+
 
     #region Mouse Movements
 
@@ -164,7 +167,7 @@ public class NormalCam : CameraState
         //Percentage of screen the mouse moved across
         float movedPercent;
         //Rotation multiplier
-        float rotationMultiplier = 5000f;
+        float rotationMultiplier = 200f;
 
 
         if (Input.GetMouseButton(1))
@@ -179,14 +182,19 @@ public class NormalCam : CameraState
             //Find percentage of screen mouse moved across
             movedPercent = mouseMoveDistance / Screen.width;
 
-            //Rotate camera
-            cameraObject.transform.RotateAround(anchorPoint, Vector3.up, movedPercent * Time.deltaTime * rotationMultiplier);
+            //Check if move percent is greater than min
+            if (movedPercent >= 0.10f || movedPercent <= -0.10f)
+            {
+                //Rotate camera
+                cameraObject.transform.RotateAround(anchorPoint, Vector3.up, movedPercent * Time.deltaTime * rotationMultiplier);
+            }
+
 
             //Make sure still looking at anchor
             LookAtAnchor();
 
             //reset mouse orgin
-            mouseOrigin = Input.mousePosition;
+            //mouseOrigin = Input.mousePosition;
 
         }
 
@@ -205,7 +213,7 @@ public class NormalCam : CameraState
     {
         cameraObject.transform.LookAt(anchorPoint);
     }
-    
+
     /// <summary>
     /// Switcch camera orbit to the opposite bool.
     /// </summary>
@@ -213,7 +221,7 @@ public class NormalCam : CameraState
     {
         //Reverse what orbit camera equals
         orbitCamera = !orbitCamera;
-        if(orbitCamera == true)
+        if (orbitCamera == true)
         {
             //Set where the mouse was at the start
             GetMousePosition();
@@ -230,5 +238,17 @@ public class NormalCam : CameraState
     {
 
     }
+
+    #region Pause Game
+
+    public void PauseGame()
+    {
+        nextState = new CamPaused(cameraObject);
+        stage = EVENT.EXIT;
+    }
+
+
+    #endregion
+
 
 }

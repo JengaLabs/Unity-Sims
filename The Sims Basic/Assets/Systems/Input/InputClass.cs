@@ -32,24 +32,19 @@ public class InputClass
 
     #endregion
 
-
+    #region Left Clicked GUI
 
     //left click, returns if what was hit is a gui or clickable
     public delegate bool leftClickedGUI();
 
     private GameObject _Selected; 
 
-    
-    
-
-
-
     //Delegate for mouse down
     public delegate void OnGuiInput();
 
     //Variable for delegate
     public OnGuiInput onGuiInput;
-
+    
 
     public void GUIinput()
     {
@@ -68,6 +63,32 @@ public class InputClass
             Debug.Log("Nothing is subscribed");
         }
     }
+    #endregion
+
+    
+   
+
+    #region Toggle Pause
+
+    /// <summary>
+    /// Delegate that calls when game needs to toggle state
+    /// </summary>
+    public delegate void TogglePause();
+    /// <summary>
+    /// Delegate to sbuscribe to when listening for pause / resume
+    /// </summary>
+    public TogglePause onTogglePause;
+
+    public void CallTogglePause()
+    {
+        //Check for subscribers
+        if (onTogglePause != null)
+        {
+            onTogglePause();
+        }
+    }
+    #endregion
+
 
 
 
