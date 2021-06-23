@@ -35,13 +35,13 @@ public class InputManager : MonoBehaviour
         //if you want to check everthing but the declared layer use
         layerMask = ~layerMask;
 
-        _InputClass = GameManager.Instance.GetInputClass();
+        
         mainCamera = Camera.main;
 
-
-        if(_InputClass == null) 
+        _InputClass = GameManager.Instance.GetInputClass();
+        if (_InputClass == null) 
         {
-            Debug.Log("Game Manager input class is null");
+            //Debug.Log("Game Manager input class is null");
         }
 
     }
@@ -56,7 +56,7 @@ public class InputManager : MonoBehaviour
             if (IsMouseOverInteractable())
             {
                 //Call interactable for object selected 
-                Debug.Log("Mouse down");
+                //Debug.Log("Mouse down");
                 _InputClass.GUIinput();
 
             }
@@ -83,10 +83,10 @@ public class InputManager : MonoBehaviour
             
         }
 
-        //Temp Resume / Pause
-        if (Input.GetKeyDown(KeyCode.Space))
+        //Escape button pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _InputClass.CallTogglePause();
+            _InputClass.EscapeButtonDown();
         }
 
 
@@ -116,14 +116,14 @@ public class InputManager : MonoBehaviour
             {
                 //Check for game layer
                 case 0:
-                    Debug.Log(raycastResults[i].gameObject.name + " this is nothing");
+                    //Debug.Log(raycastResults[i].gameObject.name + " this is nothing");
                     break;
                 case 2:
                     //This is ignored
-                    Debug.Log(raycastResults[i].gameObject.name + " this is ignored");
+                    //Debug.Log(raycastResults[i].gameObject.name + " this is ignored");
                     break;
                 case 5:
-                    Debug.Log(raycastResults[i].gameObject.name + " is a ui");
+                    //Debug.Log(raycastResults[i].gameObject.name + " is a ui");
                     //Call the interactable script 
                     return true;
                     break;
@@ -148,11 +148,11 @@ public class InputManager : MonoBehaviour
             switch (hit.transform.gameObject.layer)
             {
                 case 0:
-                    Debug.Log(hit.transform.gameObject.name + " this is nothing");
+                    //Debug.Log(hit.transform.gameObject.name + " this is nothing");
                     return false;
                     break;
                 case 8:
-                    Debug.Log(hit.transform.gameObject.name + " this is an interactable");
+                    //Debug.Log(hit.transform.gameObject.name + " this is an interactable");
                     //Set object as selected one
                     return true;
                     break;

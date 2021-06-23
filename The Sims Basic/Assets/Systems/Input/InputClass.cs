@@ -65,8 +65,27 @@ public class InputClass
     }
     #endregion
 
-    
-  
+    #region Espace button       
+    /// <summary>
+    /// Delegate that calls when the button escape is pressed
+    /// </summary>
+    public delegate void EscapeButton();
+    /// <summary>
+    /// Delegate to subscribe to when listening for escape button
+    /// </summary>
+    public EscapeButton onEscapeButton;
+
+    public void EscapeButtonDown()
+    {
+        //check for subscribers
+        if (onEscapeButton != null)
+        {
+            onEscapeButton();
+        }
+    }
+
+
+    #endregion
 
     #region Toggle Pause
 
