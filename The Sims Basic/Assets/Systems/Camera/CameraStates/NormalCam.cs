@@ -30,8 +30,10 @@ public class NormalCam : CameraState
     //Distance mouse moved
     float mouseMoveDistance = 0f;
 
-    //If mouse is being tracked for movement
+    //If mouse is being used to rotate camera
     bool orbitCamera = false;
+    //If keys are being used for typing
+    bool userTyping = false;
 
     //If in a text box
 
@@ -52,11 +54,11 @@ public class NormalCam : CameraState
 
         //Event that game is in normal mode
 
-        //Confine mouse to screen 
-        // Cursor.lockState = CursorLockMode.Confined;
-
         //Get the camera's anchor point
         anchorPoint = GameManager.Instance.GetCameraAnchorSpawnPos();
+
+        //Get camera height
+        camHeight = cameraObject.transform.position.y;
 
         //Move camera to correct position for a frame
         LookAtAnchor();
@@ -64,7 +66,7 @@ public class NormalCam : CameraState
         //Subcribe to input events needed
         _InputClass.onNothingClicked += SwitchCameraOrbitBool;
 
-        _InputClass.onTogglePause += PauseGame;
+        _InputClass.onEscapeButton += PauseGame;
 
 
         //Move to update loop
@@ -73,6 +75,12 @@ public class NormalCam : CameraState
 
     public override void Update()
     {
+        if (!userTyping)
+        {
+            BasicMovement();
+        }
+
+
         //Check if camera should be orbiting
         if (orbitCamera)
         {
@@ -104,7 +112,7 @@ public class NormalCam : CameraState
     public override void Exit()
     {
         _InputClass.onNothingClicked -= SwitchCameraOrbitBool;
-        _InputClass.onTogglePause -= PauseGame;
+        _InputClass.onEscapeButton -= PauseGame;
     }
 
 
@@ -162,46 +170,25 @@ public class NormalCam : CameraState
     /// </summary>
     private void OrbitAnchor()
     {
-        //Make sure you already trackced the starting pos of mouse
-
-        //Percentage of screen the mouse moved across
-        float movedPercent;
         //Rotation multiplier
         float rotationMultiplier = 200f;
 
 
         if (Input.GetMouseButton(1))
         {
-            //Set cursor texture
-            //for now just hiding it
-            Cursor.visible = true;
-
-            //track distance moved from orignal pos
-            mouseMoveDistance = Input.mousePosition.x - mouseOrigin.x;
-
-            //Find percentage of screen mouse moved across
-            movedPercent = mouseMoveDistance / Screen.width;
-
-            //Check if move percent is greater than min
-            if (movedPercent >= 0.10f || movedPercent <= -0.10f)
-            {
-                //Rotate camera
-                cameraObject.transform.RotateAround(anchorPoint, Vector3.up, movedPercent * Time.deltaTime * rotationMultiplier);
-            }
-
-
-            //Make sure still looking at anchor
+            
+            //Get mouse movement
+            float xRot = Input.GetAxis("Mouse X");
+            //Rotate camera
+            cameraObject.transform.RotateAround(anchorPoint, Vector3.up, xRot * Time.deltaTime * rotationMultiplier);
+            //Continue to look at anchor
             LookAtAnchor();
-
-            //reset mouse orgin
-            //mouseOrigin = Input.mousePosition;
-
         }
-
 
         //Check if player stops camera orbit
         if (Input.GetMouseButtonUp(1))
         {
+            //Set orbital bool to reverse
             SwitchCameraOrbitBool();
         }
     }
@@ -225,6 +212,14 @@ public class NormalCam : CameraState
         {
             //Set where the mouse was at the start
             GetMousePosition();
+            //Free mouse and hide it 
+            Cursor.lockState = CursorLockMode.Confined;
+            //for now just hiding it
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
@@ -243,6 +238,9 @@ public class NormalCam : CameraState
 
     public void PauseGame()
     {
+        //Call all pause game methods
+        _InputClass.CallTogglePause();
+
         nextState = new CamPaused(cameraObject);
         stage = EVENT.EXIT;
     }

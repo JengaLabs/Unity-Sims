@@ -39,7 +39,10 @@ public class CamPaused : CameraState
         _InputClass = GameManager.Instance.GetInputClass();
 
         //Subscribe method to game resume delegate 
-        _InputClass.onTogglePause += ResumeGame;
+        _InputClass.onEscapeButton += ResumeGame;
+
+        
+
 
         //Open settings 
 
@@ -60,11 +63,15 @@ public class CamPaused : CameraState
         //Set world state to unpaused
         worldStates.RemoveState("World Paused");
         //Unsubscribe to delegate 
-        _InputClass.onTogglePause -= ResumeGame;
+        _InputClass.onEscapeButton -= ResumeGame;
     }
 
     private void ResumeGame()
     {
+        //Call all pause game methods
+        _InputClass.CallTogglePause();
+
+
         nextState = new NormalCam(camera);
         stage = EVENT.EXIT;
     }

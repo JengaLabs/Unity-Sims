@@ -28,7 +28,11 @@ public class CamFree : CameraState
     Vector2 FOVlimits = new Vector2(40, 80);
 
     //Starting height
-    float cameraHeightPos; 
+    float cameraHeightPos;
+
+    //Delegates to track input
+    private InputClass _InputClass;
+
 
 
     //Constructor for state
@@ -42,6 +46,12 @@ public class CamFree : CameraState
 
     public override void Enter()
     {
+        //Get input class 
+        _InputClass = GameManager.Instance.GetInputClass();
+
+        //Subscribe to escape event
+        _InputClass.onEscapeButton += ExitFreeCam;
+
         //Event that camera is in free state
 
 
@@ -100,12 +110,7 @@ public class CamFree : CameraState
         cameraObject.transform.rotation = Quaternion.Euler(yRot, xRot, 0);
 
 
-        //Check for exit condition
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            nextState = new NormalCam(cameraObject);
-            stage = EVENT.EXIT;
-        }
+        
 
 
 
@@ -122,6 +127,22 @@ public class CamFree : CameraState
         camera.fieldOfView = 60;
 
     }
+
+    /// <summary>
+    /// Transition to normal camera state
+    /// </summary>
+    private void ExitFreeCam()
+    {
+        //Unsubscribe from input manager delegates 
+        _InputClass.onEscapeButton -= ExitFreeCam;
+
+        //Set next state
+        nextState = new NormalCam(cameraObject);
+        //Go to next state 
+        stage = EVENT.EXIT;
+
+    }
+
 
 
 }
