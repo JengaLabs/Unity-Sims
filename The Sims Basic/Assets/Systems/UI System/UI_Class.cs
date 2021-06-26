@@ -7,7 +7,19 @@ using UnityEngine.UI;
 public class UI_Class 
 {
     string UI_title;
-    string UI_text;
+
+
+    private List<GameObject> UIobjects;
+
+    public void HideAllUI()
+    {
+
+    }
+
+    public void ShowAllUI()
+    {
+
+    }
 
 
 
