@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class UImanager : MonoBehaviour
 {
 
-    //Store a Ui name and booleon for on/oof
-    public Dictionary<string, bool> UIoptions;
+    public List<UI_Class> UI_classes = new List<UI_Class>();
 
    
     private StateCMD _stateCMD;
@@ -24,6 +23,8 @@ public class UImanager : MonoBehaviour
     public void Start()
     {
         gameObjects = GetChildren();
+
+
         
         _stateCMD = new StateCMD(textbox);
 
