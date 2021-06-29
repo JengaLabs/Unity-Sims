@@ -104,6 +104,9 @@ public class InputClass
         if (onTogglePause != null)
         {
             onTogglePause();
+        }else
+        {
+            Debug.Log("Nothing subscribed to toggle pause");
         }
     }
     #endregion

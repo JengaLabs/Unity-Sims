@@ -220,6 +220,7 @@ public class NormalCam : CameraState
         else
         {
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 

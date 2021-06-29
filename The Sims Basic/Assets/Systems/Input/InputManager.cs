@@ -165,6 +165,10 @@ public class InputManager : MonoBehaviour
 
     }
     
+    public void TogglePauseGame()
+    {
+        _InputClass.CallTogglePause();
+    }
 
 
 
