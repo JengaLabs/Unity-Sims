@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class NormalCam : CameraState
 {
@@ -30,12 +31,19 @@ public class NormalCam : CameraState
     //Distance mouse moved
     float mouseMoveDistance = 0f;
 
+    //Store how zoomed in user is
+    float currentZoomLevel = 12f;
+
+    //Zoom limits
+    float farZoomLimit = 50f;
+    float nearZoomLimit = 12f;
+
     //If mouse is being used to rotate camera
     bool orbitCamera = false;
     //If keys are being used for typing
     bool userTyping = false;
 
-    //If in a text box
+    
 
 
     //Constructor for normal cam
@@ -87,7 +95,12 @@ public class NormalCam : CameraState
             OrbitAnchor();
         }
 
-
+        //Check if zooming in and out wiht mouse enabled
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            //ScrollInput();
+            SmoothScroll();
+        }
 
 
 
@@ -138,9 +151,9 @@ public class NormalCam : CameraState
         }
 
         //Movement
-        cameraObject.transform.Translate(new Vector3(HorizontalInput, 0, VerticalInput) * moveSpeed * Time.deltaTime);
+        //cameraObject.transform.Translate(new Vector3(HorizontalInput, 0, VerticalInput) * moveSpeed * Time.deltaTime);
         //Locking camera height
-        cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, camHeight, cameraObject.transform.position.z);
+        //cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, camHeight, cameraObject.transform.position.z);
 
     }
 
@@ -151,8 +164,6 @@ public class NormalCam : CameraState
     {
 
     }
-
-
 
     #region Mouse Movements
 
@@ -222,6 +233,84 @@ public class NormalCam : CameraState
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+    }
+
+    #endregion
+
+    #region Scroll Movements
+
+    /// <summary>
+    /// Depreciated, use as reference for future work
+    /// </summary>
+    private void ScrollInput()
+    {
+        //Get scroll wheel input
+        float scrollDistance = Input.mouseScrollDelta.y;
+
+        //Store orignal pos
+        Vector3 tempPos = cameraObject.transform.position;
+
+        int yMult = -10;
+        int xMult = -30;
+
+        //Store only x and z values of camera
+        Vector3 horizontalPlane = new Vector3(tempPos.x, anchorPoint.y, tempPos.z);
+
+        //Find direction between camera and anchor on xz plane
+        Vector3 dir = horizontalPlane - anchorPoint;
+        Vector3 Ndir = (dir).normalized;
+
+        
+        cameraObject.transform.position += new Vector3(dir.x * xMult, yMult, dir.z * xMult) * Time.deltaTime * scrollDistance;
+
+        //.transform.Translate(new Vector3(dir.x * xMult, 0, dir.z * xMult) * Time.deltaTime * scrollDistance);
+        //cameraObject.transform.Translate(new Vector3(0, scrollDistance * yMult * forwardDistance.magnitude, 0) * Time.deltaTime);
+
+        
+        //cameraObject.transform.Translate(new Vector3(0, scrollDistance * yMult, 0) * Time.deltaTime);
+        //cameraObject.transform.Translate(moveDir * xMult * scrollDistance * Time.deltaTime);
+
+        float dist = Vector3.Distance(anchorPoint, cameraObject.transform.position);
+        //Check distance is viable
+        if (dist > 50 || dist < 3)
+        {
+            Debug.Log("Distance not valid");
+            cameraObject.transform.position = tempPos;
+        }
+
+
+        //Reset view at anchor
+        LookAtAnchor();
+    }
+
+    private void SmoothScroll()
+    {
+        //Get scroll wheel input
+        float scrollDistance = Input.mouseScrollDelta.y;
+
+        //Store the normalized camera pos
+        Vector3 normalizedCameraPosition = cameraObject.transform.position.normalized;
+        
+
+       
+        //Zoom in 
+        if(scrollDistance > 0 && currentZoomLevel > nearZoomLimit)
+        {
+            //Subtract from zoom level and use largest values
+            currentZoomLevel = Mathf.Max(currentZoomLevel - 5f, nearZoomLimit);
+            cameraObject.transform.position = normalizedCameraPosition * currentZoomLevel;
+        }//Zoom out
+        else if(scrollDistance < 0 && currentZoomLevel < farZoomLimit)
+        {
+            //Add to current zoom level and choose whatever is smaller
+            currentZoomLevel = Mathf.Min(currentZoomLevel + 10f, farZoomLimit);
+            
+            cameraObject.transform.position = normalizedCameraPosition * currentZoomLevel;
+        }
+
+        Debug.Log(currentZoomLevel);
+
+        LookAtAnchor();
     }
 
     #endregion

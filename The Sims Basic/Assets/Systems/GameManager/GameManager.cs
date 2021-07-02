@@ -68,7 +68,7 @@ public sealed class GameManager
 
 
     /// <summary>
-    /// Returns world camera spawn
+    /// Returns world camera points
     /// </summary>
     /// <returns></returns>
     public Vector3 GetCameraAnchorSpawnPos()

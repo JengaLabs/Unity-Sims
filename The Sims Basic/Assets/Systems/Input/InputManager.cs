@@ -89,8 +89,14 @@ public class InputManager : MonoBehaviour
             _InputClass.EscapeButtonDown();
         }
 
+        
 
 
+    }
+    
+    private void test()
+    {
+        Debug.Log(EventSystem.current.IsPointerOverGameObject());
     }
 
 
