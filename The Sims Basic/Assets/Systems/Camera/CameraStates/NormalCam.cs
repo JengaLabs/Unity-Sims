@@ -32,11 +32,11 @@ public class NormalCam : CameraState
     float mouseMoveDistance = 0f;
 
     //Store how zoomed in user is
-    float currentZoomLevel = 12f;
+    float currentZoomLevel = 10f;
 
     //Zoom limits
-    float farZoomLimit = 50f;
-    float nearZoomLimit = 12f;
+    float farZoomLimit = 22f;
+    float nearZoomLimit = 10f;
 
     //If mouse is being used to rotate camera
     bool orbitCamera = false;
@@ -99,7 +99,7 @@ public class NormalCam : CameraState
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             //ScrollInput();
-            SmoothScroll();
+            ExponetialCameraScroll();
         }
 
 
@@ -296,21 +296,58 @@ public class NormalCam : CameraState
         //Zoom in 
         if(scrollDistance > 0 && currentZoomLevel > nearZoomLimit)
         {
+            
+
             //Subtract from zoom level and use largest values
             currentZoomLevel = Mathf.Max(currentZoomLevel - 5f, nearZoomLimit);
             cameraObject.transform.position = normalizedCameraPosition * currentZoomLevel;
+            
         }//Zoom out
         else if(scrollDistance < 0 && currentZoomLevel < farZoomLimit)
         {
             //Add to current zoom level and choose whatever is smaller
             currentZoomLevel = Mathf.Min(currentZoomLevel + 10f, farZoomLimit);
             
-            cameraObject.transform.position = normalizedCameraPosition * currentZoomLevel;
+            cameraObject.transform.position = normalizedCameraPosition * currentZoomLevel;   
         }
 
         Debug.Log(currentZoomLevel);
 
         LookAtAnchor();
+    }
+
+
+    private void ExponetialCameraScroll()
+    {
+        //Get scroll wheel input either +1 or -1
+        float scrollDistance = Input.mouseScrollDelta.y;
+        currentZoomLevel -= scrollDistance;
+        //Clamp the zoom value 
+        currentZoomLevel = Mathf.Clamp(currentZoomLevel, nearZoomLimit, farZoomLimit);
+
+        //Get just the x and z direction
+        Vector3 dir = new Vector3(cameraObject.transform.position.x, 0, cameraObject.transform.position.z) - new Vector3(anchorPoint.x, 0, anchorPoint.z);
+        //Debug.DrawRay(cameraObject.transform.position, dir.normalized * -10, Color.red);
+
+
+        //Calculate new position of camera 
+        Vector3 newPos = new Vector3(cameraObject.transform.position.x , Mathf.Pow(1.2f, currentZoomLevel), cameraObject.transform.position.z);
+
+        if(scrollDistance != 0)
+        {
+            if(currentZoomLevel < farZoomLimit && currentZoomLevel > nearZoomLimit)
+            {
+                cameraObject.transform.position = newPos;
+                cameraObject.transform.Translate(-dir.normalized * scrollDistance * 5, Space.World);
+            }
+            
+        }
+        
+
+
+        //Reset view at anchor
+        LookAtAnchor();
+        
     }
 
     #endregion
