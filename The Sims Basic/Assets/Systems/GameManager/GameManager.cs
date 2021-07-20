@@ -13,10 +13,10 @@ public sealed class GameManager
     //Class that holds all world states
     private static WorldStates world = new WorldStates();
 
-    //Hold the spawn point of the world
+    //Hold the spawn point of the current world
     private static Vector3 CameraAnchorPoint = new Vector3(0, 5, 0);
 
-    //Sends out events related to inputs 
+    //Sends out events related to players inputs 
     private static InputClass _InputClass = new InputClass();
 
 
@@ -44,7 +44,7 @@ public sealed class GameManager
 
 
 
-    
+    #region Properties 
 
 
     /// <summary>
@@ -76,6 +76,6 @@ public sealed class GameManager
         return CameraAnchorPoint;
     }
 
-
+    #endregion
 
 }

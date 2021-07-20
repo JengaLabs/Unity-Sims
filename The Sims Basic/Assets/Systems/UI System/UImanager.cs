@@ -32,6 +32,7 @@ public class UImanager : MonoBehaviour
         _InputClass = GameManager.Instance.GetInputClass();
 
         //subscribe to input classes
+        //Pause 
         _InputClass.onTogglePause += HideAllUI;
 
 
@@ -40,7 +41,7 @@ public class UImanager : MonoBehaviour
     private void Update()
     {
 
-        //Debug.Log(GameManager.Instance.GetWorld());
+        
         //World state updated 
         _stateCMD.Process(GameManager.Instance.GetWorld());
         
