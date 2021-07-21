@@ -2,11 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GUI : MonoBehaviour, IPooledGui
+public class Gui : MonoBehaviour
 {
     
-    public void OnGuiPooled()
-    {
-        Debug.Log("Hi");
-    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
 }
