@@ -49,6 +49,9 @@ public class InputManager : MonoBehaviour
     void Update()
     {
 
+
+        #region Mouse Inputs 
+
         //Right clicked
         if (Input.GetMouseButtonDown(1))
         {
@@ -82,6 +85,8 @@ public class InputManager : MonoBehaviour
             }
             
         }
+
+        #endregion
 
         //Escape button pressed
         if (Input.GetKeyDown(KeyCode.Escape))

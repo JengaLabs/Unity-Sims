@@ -34,7 +34,7 @@ public class InputClass
 
     #region Left Clicked GUI
 
-    //left click, returns if what was hit is a gui or clickable
+    //left click, returns bool if what was hit is a gui or clickable
     public delegate bool leftClickedGUI();
 
     private GameObject _Selected; 
