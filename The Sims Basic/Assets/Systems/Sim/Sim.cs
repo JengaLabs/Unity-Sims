@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class Sim : GAgent
 {
+
     
     
+    
+    private void Awake()
+    {
+
+    }
 
     private new void Start()
     {
         base.Start();
+
+        //All Sims want to be pasued 
+
         //Add goals 
         SubGoal s2 = new SubGoal("rested", 1, false);
         goals.Add(s2, 1);
@@ -17,7 +26,7 @@ public class Sim : GAgent
         Invoke("GetTired", Random.Range(10, 20));
 
     }
-
+    
     void GetTired()
     {
         beliefs.ModifyState("exhausted", 0);

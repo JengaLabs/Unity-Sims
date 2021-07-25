@@ -8,7 +8,7 @@ public class GoToo : GAction
     public override bool PrePerform()
     {
 
-        Debug.Log("Hello");
+        
 
         //Find the current target
         //target = this.inventory.FindItemWithTag("GoToo");
@@ -25,9 +25,9 @@ public class GoToo : GAction
     {
         //Remove the current target
         //inventory.RemoveItem(target);
-
+        
         beliefs.RemoveState("exhausted");
-
+        
         return true;
     }
 

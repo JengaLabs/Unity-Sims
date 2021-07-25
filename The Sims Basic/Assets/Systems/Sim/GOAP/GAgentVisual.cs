@@ -12,4 +12,10 @@ public class GAgentVisual : MonoBehaviour
     {
         thisAgent = this.GetComponent<GAgent>();
     }
+
+    void Update()
+    {
+
+    }
+
 }
