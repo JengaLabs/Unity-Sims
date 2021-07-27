@@ -17,13 +17,15 @@ public class UImanager : MonoBehaviour
     //Input class that input events are reported to 
     InputClass _InputClass;
 
-    public GameObject[] gameObjects = null;
-
+    
 
     public void Start()
     {
-        gameObjects = GetChildren();
-
+        
+        foreach (GameObject obj in GetChildren())
+        {
+            UI_classes.Add(new UI_Class(obj, obj.name));
+        }
 
         
         _stateCMD = new StateCMD(textbox);
@@ -32,10 +34,10 @@ public class UImanager : MonoBehaviour
         _InputClass = GameManager.Instance.GetInputClass();
 
         //subscribe to input classes
-        //Pause 
-        _InputClass.onTogglePause += HideAllUI;
+        //Pause event
+        _InputClass.onTogglePause += HideMenu;
 
-
+        
     }
 
     private void Update()
@@ -62,12 +64,23 @@ public class UImanager : MonoBehaviour
 
 
 
-    public void HideAllUI()
+    private void HideMenu()
     {
-        foreach(GameObject gameObject in gameObjects)
+        SetActiveStateForUI("Menu");
+    }
+
+    public void SetActiveStateForUI(string UIname)
+    {
+        foreach(UI_Class ui in UI_classes)
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            if(ui.name == UIname)
+            {
+                ui.HideAllUI();
+                return;
+            }
         }
+
+        Debug.Log("No ui object with name " + UIname);
     }
 
 

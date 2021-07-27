@@ -137,7 +137,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log(raycastResults[i].gameObject.name + " is a ui");
                     //Call the interactable script 
                     return true;
-                    break;
+                    
                 
             }
 
@@ -159,14 +159,14 @@ public class InputManager : MonoBehaviour
             switch (hit.transform.gameObject.layer)
             {
                 case 0:
-                    //Debug.Log(hit.transform.gameObject.name + " this is nothing");
+                    Debug.Log(hit.transform.gameObject.name + " this is enviroment");
                     return false;
-                    break;
+                    
                 case 8:
-                    //Debug.Log(hit.transform.gameObject.name + " this is an interactable");
+                    Debug.Log(hit.transform.gameObject.name + " this is an interactable");
                     //Set object as selected one
                     return true;
-                    break;
+                    
             }
         }
         #endregion

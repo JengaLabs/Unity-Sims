@@ -5,7 +5,9 @@ using UnityEngine;
 public class Sim : GAgent
 {
 
-    
+
+
+    private int GameWorldSpeed; 
     
     
     private void Awake()
@@ -18,10 +20,11 @@ public class Sim : GAgent
         base.Start();
 
         //All Sims want to be pasued 
-
+        SubGoal s1 = new SubGoal("CommandsFollowed", 1, false);
+        goals.Add(s1, 1);
         //Add goals 
-        SubGoal s2 = new SubGoal("rested", 1, false);
-        goals.Add(s2, 1);
+        SubGoal s2 = new SubGoal("rested", 2, false);
+        goals.Add(s2, 2);
 
         Invoke("GetTired", Random.Range(10, 20));
 
@@ -49,6 +52,15 @@ public class Sim : GAgent
     public void AddGoal(SubGoal subGoal)
     {
         goals.Add(subGoal, 1);
+    }
+
+    /// <summary>
+    /// Change the speed behavoirs of the sim
+    /// </summary>
+    /// <param name="speed"></param>
+    public void SetSimWorldSpeed(int speed)
+    {
+        
     }
 
     

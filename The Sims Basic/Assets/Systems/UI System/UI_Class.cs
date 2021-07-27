@@ -7,47 +7,30 @@ using UnityEngine.UI;
 public class UI_Class 
 {
 
-    public UI_Class(GameObject UI_Object)
+    public UI_Class(GameObject UI_Object, string name)
     {
         this.thisObject = UI_Object;
+        this.name = name;
     }
 
     
 
 
     GameObject thisObject;
-    string UI_title;
+
+    public string name;
+    
 
 
-    private List<GameObject> UIobjects;
+   
 
     public void HideAllUI()
     {
-        foreach(GameObject ui in UIobjects)
-        {
-            ui.SetActive(!ui.activeSelf);
-        }
+        thisObject.SetActive(!thisObject.activeSelf);
     }
 
-    public void ShowAllUI()
-    {
-        foreach (GameObject ui in UIobjects)
-        {
-            ui.SetActive(!ui.activeSelf);
-        }
-    }
+    
 
-    private GameObject[] GetChildren()
-    {
-        GameObject[] tempArray = new GameObject[thisObject.transform.childCount];
-
-        for (int i = 0; i < thisObject.transform.childCount; i++)
-        {
-            tempArray[i] = thisObject.transform.GetChild(i).gameObject;
-        }
-
-        return tempArray;
-    }
 
 
 

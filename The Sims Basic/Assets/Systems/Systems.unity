@@ -308,9 +308,9 @@ GameObject:
   - component: {fileID: 151692918}
   - component: {fileID: 151692916}
   - component: {fileID: 151692915}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sim
-  m_TagString: Untagged
+  m_TagString: Sim
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -730,7 +730,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textbox: {fileID: 125354556}
-  gameObjects: []
 --- !u!1 &575414689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2516,7 +2515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1642862188}
   m_Layer: 2
-  m_Name: Main Menu
+  m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
