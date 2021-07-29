@@ -11,10 +11,12 @@ public class CameraManager : MonoBehaviour
 
     private WorldStates worldStates;
 
+    
 
 
     private void Start()
     {
+        
         worldStates = GameManager.Instance.GetWorld();
         currentState = new CamPaused(this.gameObject);
     }

@@ -11,7 +11,8 @@ public class NormalCam : CameraState
     //Delegates to track
     private InputClass _InputClass;
 
-
+    //Camera anchor
+    private GameObject myAnchor;
 
     //Store the camera object
     GameObject cameraObject;
@@ -51,6 +52,7 @@ public class NormalCam : CameraState
         : base(_camera)
     {
         cameraObject = _camera;
+        myAnchor = cameraObject.transform.parent.gameObject;
         camera = Camera.main;
     }
 
@@ -62,8 +64,7 @@ public class NormalCam : CameraState
 
         //Event that game is in normal mode
 
-        //Get the camera's anchor point
-        anchorPoint = GameManager.Instance.GetCameraAnchorSpawnPos();
+        
 
         //Get camera height
         camHeight = cameraObject.transform.position.y;
@@ -72,7 +73,8 @@ public class NormalCam : CameraState
         LookAtAnchor();
 
         //Subcribe to input events needed
-        _InputClass.onNothingClicked += SwitchCameraOrbitBool;
+        //Right
+        _InputClass.onNothingRightClicked += SwitchCameraOrbitBool;
 
         _InputClass.onEscapeButton += PauseGame;
 
@@ -124,7 +126,7 @@ public class NormalCam : CameraState
 
     public override void Exit()
     {
-        _InputClass.onNothingClicked -= SwitchCameraOrbitBool;
+        _InputClass.onNothingRightClicked -= SwitchCameraOrbitBool;
         _InputClass.onEscapeButton -= PauseGame;
     }
 
@@ -150,11 +152,51 @@ public class NormalCam : CameraState
             moveSpeed = 10;
         }
 
-        //Movement
-        //cameraObject.transform.Translate(new Vector3(HorizontalInput, 0, VerticalInput) * moveSpeed * Time.deltaTime);
-        //Locking camera height
-        //cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, camHeight, cameraObject.transform.position.z);
+        //Set x position
+        myAnchor.transform.Translate(Vector3.forward * Time.deltaTime * VerticalInput * moveSpeed);
+        //Set z position
+        myAnchor.transform.Translate(Vector3.right * Time.deltaTime * HorizontalInput * moveSpeed);
+        //Find y position
+        myAnchor.transform.Translate(Vector3.down * Time.deltaTime * FixAnchorHeight(myAnchor.transform.position));
+    }
 
+    /// <summary>
+    /// Returns a float based on wether the anchor should move up or down. 
+    /// </summary>
+    /// <param name="currentPos"></param>
+    /// <returns></returns>
+    private float FixAnchorHeight(Vector3 currentPos)
+    {
+        //store hit data
+        RaycastHit hit;
+        //store a ray facing downwards
+        Ray ray = new Ray(currentPos, Vector3.down * 100);
+        //If ray hits somthing underneath it and within 10 units on the default layer 
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
+
+            if(hit.transform.gameObject.layer != 0)
+            {
+                return 0;
+            }
+            //Debug.Log(hit.transform.name);
+            //check the distance from that object
+            float distance = currentPos.y - hit.point.y;
+       
+            if (distance > 6f)
+            {
+                //distance too big
+                return 5f;
+            }
+            else if (distance < 4f)
+            {
+                //distance to small
+                return -5f;
+            }
+        }
+        
+        
+        return 0;
     }
 
     /// <summary>
@@ -190,8 +232,11 @@ public class NormalCam : CameraState
             
             //Get mouse movement
             float xRot = Input.GetAxis("Mouse X");
-            //Rotate camera
-            cameraObject.transform.RotateAround(anchorPoint, Vector3.up, xRot * Time.deltaTime * rotationMultiplier);
+            //Rotate camera around anchor
+            //cameraObject.transform.RotateAround(myAnchor.transform.position, Vector3.up, xRot * Time.deltaTime * rotationMultiplier);
+            //Rotate the anchor 
+            myAnchor.transform.Rotate(Vector3.up, xRot);
+            
             //Continue to look at anchor
             LookAtAnchor();
         }
@@ -209,7 +254,7 @@ public class NormalCam : CameraState
     /// </summary>
     private void LookAtAnchor()
     {
-        cameraObject.transform.LookAt(anchorPoint);
+        cameraObject.transform.LookAt(myAnchor.transform.position);
     }
 
     /// <summary>
@@ -375,5 +420,11 @@ public class NormalCam : CameraState
 
     #endregion
 
+    
+    #region Anchor
+    //The center point of which the camera orbits and moves off of. 
+
+
+    #endregion
 
 }

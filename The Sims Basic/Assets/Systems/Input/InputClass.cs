@@ -17,16 +17,16 @@ public class InputClass
     /// </summary>
     public delegate void ClickedNothing();
     //Delegate for objects to subscribe to 
-    public ClickedNothing onNothingClicked;
+    public ClickedNothing onNothingRightClicked;
     /// <summary>
     /// Call on nothing clicked delegate
     /// </summary>
     public void CallClickedNothing()
     {
         //Check for subscribers
-        if(onNothingClicked != null)
+        if(onNothingRightClicked != null)
         {
-            onNothingClicked();
+            onNothingRightClicked();
         }
     }
 
