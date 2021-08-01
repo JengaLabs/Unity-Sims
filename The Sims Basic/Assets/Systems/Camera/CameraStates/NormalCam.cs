@@ -33,7 +33,7 @@ public class NormalCam : CameraState
     float mouseMoveDistance = 0f;
 
     //Store how zoomed in user is
-    float currentZoomLevel = 10f;
+    float _CurrentZoomLevel = 10f;
 
     //Zoom limits
     float farZoomLimit = 22f;
@@ -44,7 +44,7 @@ public class NormalCam : CameraState
     //If keys are being used for typing
     bool userTyping = false;
 
-    
+
 
 
     //Constructor for normal cam
@@ -64,7 +64,7 @@ public class NormalCam : CameraState
 
         //Event that game is in normal mode
 
-        
+
 
         //Get camera height
         camHeight = cameraObject.transform.position.y;
@@ -97,13 +97,13 @@ public class NormalCam : CameraState
             OrbitAnchor();
         }
 
-        //Check if zooming in and out wiht mouse enabled
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            //ScrollInput();
-            ExponetialCameraScroll();
-        }
-
+        ////Check if zooming in and out wiht mouse enabled
+        //if (!EventSystem.current.IsPointerOverGameObject())
+        //{
+        //    //ScrollInput();
+        //    ExponetialCameraScroll();
+        //}
+        LocalSmoothScroll();
 
 
         //Wasd controls and shift multiplier
@@ -175,14 +175,14 @@ public class NormalCam : CameraState
         if (Physics.Raycast(ray, out hit, 100f))
         {
 
-            if(hit.transform.gameObject.layer != 0)
+            if (hit.transform.gameObject.layer != 0)
             {
                 return 0;
             }
             //Debug.Log(hit.transform.name);
             //check the distance from that object
             float distance = currentPos.y - hit.point.y;
-       
+
             if (distance > 6f)
             {
                 //distance too big
@@ -194,8 +194,8 @@ public class NormalCam : CameraState
                 return -5f;
             }
         }
-        
-        
+
+
         return 0;
     }
 
@@ -223,20 +223,17 @@ public class NormalCam : CameraState
     /// </summary>
     private void OrbitAnchor()
     {
-        //Rotation multiplier
-        float rotationMultiplier = 200f;
-
 
         if (Input.GetMouseButton(1))
         {
-            
+
             //Get mouse movement
             float xRot = Input.GetAxis("Mouse X");
             //Rotate camera around anchor
             //cameraObject.transform.RotateAround(myAnchor.transform.position, Vector3.up, xRot * Time.deltaTime * rotationMultiplier);
             //Rotate the anchor 
             myAnchor.transform.Rotate(Vector3.up, xRot);
-            
+
             //Continue to look at anchor
             LookAtAnchor();
         }
@@ -305,13 +302,13 @@ public class NormalCam : CameraState
         Vector3 dir = horizontalPlane - anchorPoint;
         Vector3 Ndir = (dir).normalized;
 
-        
+
         cameraObject.transform.position += new Vector3(dir.x * xMult, yMult, dir.z * xMult) * Time.deltaTime * scrollDistance;
 
         //.transform.Translate(new Vector3(dir.x * xMult, 0, dir.z * xMult) * Time.deltaTime * scrollDistance);
         //cameraObject.transform.Translate(new Vector3(0, scrollDistance * yMult * forwardDistance.magnitude, 0) * Time.deltaTime);
 
-        
+
         //cameraObject.transform.Translate(new Vector3(0, scrollDistance * yMult, 0) * Time.deltaTime);
         //cameraObject.transform.Translate(moveDir * xMult * scrollDistance * Time.deltaTime);
 
@@ -328,71 +325,35 @@ public class NormalCam : CameraState
         LookAtAnchor();
     }
 
-    private void SmoothScroll()
-    {
-        //Get scroll wheel input
-        float scrollDistance = Input.mouseScrollDelta.y;
-
-        //Store the normalized camera pos
-        Vector3 normalizedCameraPosition = cameraObject.transform.position.normalized;
-        
-
-       
-        //Zoom in 
-        if(scrollDistance > 0 && currentZoomLevel > nearZoomLimit)
-        {
-            
-
-            //Subtract from zoom level and use largest values
-            currentZoomLevel = Mathf.Max(currentZoomLevel - 5f, nearZoomLimit);
-            cameraObject.transform.position = normalizedCameraPosition * currentZoomLevel;
-            
-        }//Zoom out
-        else if(scrollDistance < 0 && currentZoomLevel < farZoomLimit)
-        {
-            //Add to current zoom level and choose whatever is smaller
-            currentZoomLevel = Mathf.Min(currentZoomLevel + 10f, farZoomLimit);
-            
-            cameraObject.transform.position = normalizedCameraPosition * currentZoomLevel;   
-        }
-
-        Debug.Log(currentZoomLevel);
-
-        LookAtAnchor();
-    }
 
 
-    private void ExponetialCameraScroll()
+
+
+    private void LocalSmoothScroll()
     {
         //Get scroll wheel input either +1 or -1
         float scrollDistance = Input.mouseScrollDelta.y;
-        currentZoomLevel -= scrollDistance;
+        //Take from current scroll distance level
+        _CurrentZoomLevel -= scrollDistance;
         //Clamp the zoom value 
-        currentZoomLevel = Mathf.Clamp(currentZoomLevel, nearZoomLimit, farZoomLimit);
+        _CurrentZoomLevel = Mathf.Clamp(_CurrentZoomLevel, nearZoomLimit, farZoomLimit);
 
-        //Get just the x and z direction
-        Vector3 dir = new Vector3(cameraObject.transform.position.x, 0, cameraObject.transform.position.z) - new Vector3(anchorPoint.x, 0, anchorPoint.z);
-        //Debug.DrawRay(cameraObject.transform.position, dir.normalized * -10, Color.red);
+        Vector3 newPos = new Vector3(cameraObject.transform.localPosition.x , Mathf.Pow(1.2f, _CurrentZoomLevel), -_CurrentZoomLevel * 1.2f);
 
-
-        //Calculate new position of camera 
-        Vector3 newPos = new Vector3(cameraObject.transform.position.x , Mathf.Pow(1.2f, currentZoomLevel), cameraObject.transform.position.z);
-
-        if(scrollDistance != 0)
+        //Check user scrolled
+        if (scrollDistance != 0)
         {
-            if(currentZoomLevel < farZoomLimit && currentZoomLevel > nearZoomLimit)
+            //Scroll is inbound
+            if (_CurrentZoomLevel < farZoomLimit && _CurrentZoomLevel > nearZoomLimit)
             {
-                cameraObject.transform.position = newPos;
-                cameraObject.transform.Translate(-dir.normalized * scrollDistance * 5, Space.World);
+                //Debug.Log("Current zoom level is " + _CurrentZoomLevel);
+                //Move camera to new position
+                cameraObject.transform.localPosition = newPos;
             }
-            
         }
-        
 
-
-        //Reset view at anchor
+        //Reset view
         LookAtAnchor();
-        
     }
 
     #endregion
@@ -420,7 +381,7 @@ public class NormalCam : CameraState
 
     #endregion
 
-    
+
     #region Anchor
     //The center point of which the camera orbits and moves off of. 
 
