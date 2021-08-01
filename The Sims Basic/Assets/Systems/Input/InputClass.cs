@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InputClass 
 {
@@ -62,6 +60,33 @@ public class InputClass
         {
             Debug.Log("Nothing is subscribed");
         }
+    }
+    #endregion
+
+    #region Left Clicked Enviroment
+    //When the user left clicks the enviroment
+    public delegate void OnLeftClickedEnviroment(Vector3 selectedPoint);
+
+    private Vector3 pointClicked;
+
+    //Varible for delgate to listen to
+    public OnLeftClickedEnviroment onLeftClickedEnviroment;
+
+    public void leftClickedEnviroment(Vector3 selectedPoint)
+    {
+        Debug.Log("Left clicked enviroment");
+
+        //Check if anything is subscribed
+        if(onLeftClickedEnviroment != null)
+        {
+            //Call event with selected point
+            onLeftClickedEnviroment(selectedPoint);
+        }
+        else
+        {
+            Debug.Log("Nothing is subscribed");
+        }
+        
     }
     #endregion
 

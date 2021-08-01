@@ -19,6 +19,8 @@ public sealed class GameManager
     //Sends out events related to players inputs 
     private static InputClass _InputClass = new InputClass();
 
+    private static Sim SelectedSim = null;
+
 
     public static GameManager Instance
     {
@@ -74,6 +76,19 @@ public sealed class GameManager
     public Vector3 GetCameraAnchorSpawnPos()
     {
         return CameraAnchorPoint;
+    }
+
+    public Sim GetSelectedSim()
+    {
+        if(SelectedSim != null)
+        {
+            return SelectedSim;
+        }
+        else
+        {
+            Debug.Log("No Sim currently selected");
+            return null; 
+        }
     }
 
     #endregion

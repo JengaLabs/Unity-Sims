@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
     int layerMask = 1 << 2;
     //That only cast rays against colliders in layer 2
 
-
+    
 
 
 
@@ -158,12 +158,18 @@ public class InputManager : MonoBehaviour
             //Debug.Log(hit.transform.gameObject.layer);
             switch (hit.transform.gameObject.layer)
             {
-                case 0:
-                    Debug.Log(hit.transform.gameObject.name + " this is enviroment");
+                case 0:         
+                    //Debug.Log(hit.transform.gameObject.name + " this is enviroment");
+
+                    //Call left clicked enviroment event 
+                    _InputClass.leftClickedEnviroment(hit.point);
                     return false;
                     
                 case 8:
+                    
                     Debug.Log(hit.transform.gameObject.name + " this is an interactable");
+                    
+                    
                     //Set object as selected one
                     return true;
                     
@@ -180,6 +186,8 @@ public class InputManager : MonoBehaviour
     {
         _InputClass.CallTogglePause();
     }
+
+    
 
 
 
