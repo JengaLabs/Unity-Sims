@@ -451,16 +451,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b9ba71e58439046adce7450d6ae85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionName: Break
+  actionName: GoToo
   cost: 1
-  target: {fileID: 1207112205}
+  target: {fileID: 0}
   targetTag: 
   duration: 0
   preConditions:
-  - key: exhausted
+  - key: CommandGiven
     value: 0
   afterEffects:
-  - key: rested
+  - key: CommandsFollowed
     value: 1
   agent: {fileID: 0}
   running: 0

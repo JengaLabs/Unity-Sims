@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sim
   - object
+  - Goal Location
   layers:
   - Default
   - TransparentFX

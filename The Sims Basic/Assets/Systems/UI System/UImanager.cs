@@ -69,6 +69,11 @@ public class UImanager : MonoBehaviour
         SetActiveStateForUI("Menu");
     }
 
+    private void HideActionMenu()
+    {
+        SetActiveStateForUI("ActionMenu");
+    }
+
     public void SetActiveStateForUI(string UIname)
     {
         foreach(UI_Class ui in UI_classes)

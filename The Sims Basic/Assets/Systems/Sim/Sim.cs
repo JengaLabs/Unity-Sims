@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sim : GAgent
 {
 
-
+    private InputClass inputClass;
 
     private int GameWorldSpeed; 
     
@@ -13,6 +13,11 @@ public class Sim : GAgent
     private void Awake()
     {
 
+       
+        
+        inputClass = GameManager.Instance.GetInputClass();
+        inputClass.onLeftClickedEnviroment += AddLocationGoal;
+        
     }
 
     private new void Start()
@@ -26,14 +31,14 @@ public class Sim : GAgent
         SubGoal s2 = new SubGoal("rested", 2, false);
         goals.Add(s2, 2);
 
-        Invoke("GetTired", Random.Range(10, 20));
-
+        //Invoke("GetCommand", Random.Range(10, 20));
+        
     }
     
-    void GetTired()
+    void GetCommand()
     {
-        beliefs.ModifyState("exhausted", 0);
-        Invoke("GetTired", Random.Range(10, 20));
+        beliefs.ModifyState("CommandGiven", 0);
+        Invoke("GetCommand", Random.Range(10, 20));
     }
 
 
@@ -44,9 +49,15 @@ public class Sim : GAgent
 
     }
 
-    public void AddObject(GameObject i)
+    public void AddLocationGoal(Vector3 i)
     {
-        inventory.AddItem(i);
+        //Add goal 
+        beliefs.ModifyState("CommandGiven", 1);
+
+        GameObject tempGoal = new GameObject();
+        tempGoal.transform.position = i;
+        tempGoal.tag = "Goal Location";
+        inventory.AddItem(tempGoal);
     }
 
     public void AddGoal(SubGoal subGoal)
@@ -62,6 +73,8 @@ public class Sim : GAgent
     {
         
     }
+
+    
 
     
 
