@@ -5,13 +5,14 @@ using UnityEngine;
 public class GoToo : GAction
 {
 
+    
+
     public override bool PrePerform()
     {
 
-        
 
-        //Find the current target
-        //target = this.inventory.FindItemWithTag("GoToo");
+
+        target = inventory.FindItemWithTag("Goal Location");
 
         if(target == null)
         {
@@ -23,11 +24,16 @@ public class GoToo : GAction
 
     public override bool PostPerform()
     {
-        //Remove the current target
-        //inventory.RemoveItem(target);
-        
-        beliefs.RemoveState("exhausted");
-        
+
+        if(target != null)
+        {
+            inventory.RemoveItem(target);
+            DestroyImmediate(target);
+            
+        }
+
+
+
         return true;
     }
 
