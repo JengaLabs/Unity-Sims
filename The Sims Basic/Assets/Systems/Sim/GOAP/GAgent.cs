@@ -13,7 +13,7 @@ public class SubGoal
     public bool remove;
 
     /// <summary>
-    /// Give a bot a goal to reach for wit hthe option to remove it 
+    /// Give a bot a goal to reach for with the option to remove it
     /// </summary>
     /// <param name="GoalName"></param>
     /// <param name="GoalSize"></param>
@@ -65,7 +65,7 @@ public class GAgent : MonoBehaviour
      private void LateUpdate()
     {
 
-        if (currentAction != null && currentAction.running)
+        if (currentAction != null && currentAction.running && currentAction.target)
         {
             if (currentAction.agent.hasPath && currentAction.agent.remainingDistance < 3f)
             {
@@ -116,6 +116,7 @@ public class GAgent : MonoBehaviour
                 {
                     currentAction.target = GameObject.FindWithTag(currentAction.targetTag);
                 }
+                
                 if (currentAction.target != null)
                 {
                     currentAction.running = true;
