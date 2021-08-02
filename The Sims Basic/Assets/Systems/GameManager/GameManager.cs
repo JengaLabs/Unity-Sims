@@ -19,8 +19,12 @@ public sealed class GameManager
     //Sends out events related to players inputs 
     private static InputClass _InputClass = new InputClass();
 
+    //Current selected sim
     private static Sim SelectedSim = null;
 
+    //Stores all object actions by object names
+    private static ObjectActionsStorage ActionStorage = new ObjectActionsStorage();
+    
 
     public static GameManager Instance
     {
@@ -48,6 +52,10 @@ public sealed class GameManager
 
     #region Properties 
 
+    public ObjectActionsStorage GetActionsStorage()
+    {
+        return ActionStorage;
+    }
 
     /// <summary>
     /// Returns the current world states
@@ -89,6 +97,11 @@ public sealed class GameManager
             Debug.Log("No Sim currently selected");
             return null; 
         }
+    }
+
+    public void SelectSim(Sim newSim)
+    {
+        SelectedSim = newSim;
     }
 
     #endregion

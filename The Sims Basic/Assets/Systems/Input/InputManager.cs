@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     //private GameObject selected = null;
 
 
+
     //Input class that input events are reported to 
     InputClass _InputClass;
 
@@ -55,6 +56,18 @@ public class InputManager : MonoBehaviour
         //Right clicked
         if (Input.GetMouseButtonDown(1))
         {
+
+            _InputClass.CallClickedNothing();
+
+
+
+        }
+
+
+        //Left clicked
+        if (Input.GetMouseButtonDown(0))
+        {
+            //Check what was hit
             //Check if mouse down was on a UI 
             if (IsMouseOverInteractable())
             {
@@ -63,26 +76,7 @@ public class InputManager : MonoBehaviour
                 _InputClass.GUIinput();
 
             }
-            else
-            {
-                //Nothing is interactable 
-                _InputClass.CallClickedNothing();
-
-            }
-
-
             
-        }
-
-
-        //Left clicked
-        if (Input.GetMouseButtonDown(0))
-        {
-            //Check what was hit
-            if (IsMouseOverInteractable())
-            {
-
-            }
             
         }
 
@@ -158,11 +152,22 @@ public class InputManager : MonoBehaviour
             //Debug.Log(hit.transform.gameObject.layer);
             switch (hit.transform.gameObject.layer)
             {
-                case 0:         
+                case 0:
                     //Debug.Log(hit.transform.gameObject.name + " this is enviroment");
 
                     //Call left clicked enviroment event 
-                    _InputClass.leftClickedEnviroment(hit.point);
+                    //_InputClass.leftClickedEnviroment(hit.point);
+                    //Call left clicked event for action menu class
+
+                    //Store location clicked and object 
+                    _InputClass.StoredLocation = hit.point;
+                    _InputClass.StoredObject = hit.transform.gameObject;
+
+                    //Pass the enviroment game object 
+                    _InputClass.leftClickedGameObject("Enviroment");
+
+                    
+                    
                     return false;
                     
                 case 8:

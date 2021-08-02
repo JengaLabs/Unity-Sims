@@ -33,6 +33,9 @@ public class UImanager : MonoBehaviour
         //Get the input manager
         _InputClass = GameManager.Instance.GetInputClass();
 
+        //Hide the action menu
+        HideActionMenu();
+
         //subscribe to input classes
         //Pause event
         _InputClass.onTogglePause += HideMenu;

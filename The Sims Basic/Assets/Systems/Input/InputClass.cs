@@ -3,6 +3,9 @@
 public class InputClass 
 {
 
+    public Vector3 StoredLocation;
+    public GameObject StoredObject;
+
     public InputClass()
     {
 
@@ -90,6 +93,31 @@ public class InputClass
     }
     #endregion
 
+    #region Left Clicked Object
+
+    //When user clicks a game object
+    public delegate void OnLeftClickedGameObject(string objectName);
+
+    //Variable for delagte to listen to
+    public OnLeftClickedGameObject onClickedObject;
+
+    //Method to call when clicked object
+    public void leftClickedGameObject(string _objectName)
+    {
+        //Check for subscribers
+        if(onClickedObject != null)
+        {
+            //Call event with string name
+            onClickedObject(_objectName);
+        }
+        else
+        {
+            Debug.LogError("Nothing is subscribed to left clicked game object");
+        }
+    }
+
+    #endregion
+
     #region Espace button       
     /// <summary>
     /// Delegate that calls when the button escape is pressed
@@ -136,7 +164,7 @@ public class InputClass
     }
     #endregion
 
-
+    
 
 
     /// <summary>

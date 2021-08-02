@@ -12,7 +12,7 @@ public class Sim : GAgent
     
     private void Awake()
     {
-
+        GameManager.Instance.SelectSim(this);
        
         
         inputClass = GameManager.Instance.GetInputClass();
