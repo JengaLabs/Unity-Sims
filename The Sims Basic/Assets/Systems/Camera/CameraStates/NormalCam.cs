@@ -37,7 +37,7 @@ public class NormalCam : CameraState
 
     //Zoom limits
     float farZoomLimit = 22f;
-    float nearZoomLimit = 10f;
+    float nearZoomLimit = 1f;
 
     //If mouse is being used to rotate camera
     bool orbitCamera = false;
@@ -69,11 +69,17 @@ public class NormalCam : CameraState
         //Get camera height
         camHeight = cameraObject.transform.position.y;
 
+        //Move to anchors front default position 
+        MoveToAnchor();
+
         //Move camera to correct position for a frame
         LookAtAnchor();
 
+
+       
+
         //Subcribe to input events needed
-        //Right
+        //Held right click 
         _InputClass.onNothingRightClicked += SwitchCameraOrbitBool;
 
         _InputClass.onEscapeButton += PauseGame;
@@ -364,7 +370,10 @@ public class NormalCam : CameraState
     /// </summary>
     private void MoveToAnchor()
     {
-
+        //Move to default local position
+        cameraObject.transform.localPosition = new Vector3(0, 5, -10);
+        //Reset zoom level
+        _CurrentZoomLevel = 10f;
     }
 
     #region Pause Game
