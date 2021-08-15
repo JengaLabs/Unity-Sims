@@ -10,6 +10,10 @@ public class GoToo : GAction
     public override bool PrePerform()
     {
 
+        if (!beliefs.HasState("Standing"))
+        {
+            return false;
+        }
 
 
         target = inventory.FindItemWithTag("Goal Location");
@@ -31,6 +35,8 @@ public class GoToo : GAction
             DestroyImmediate(target);
             
         }
+
+        beliefs.ModifyState("CommandGiven", -1);
 
 
 

@@ -17,6 +17,7 @@ public class UImanager : MonoBehaviour
     //Input class that input events are reported to 
     InputClass _InputClass;
 
+    private Sim sim;
     
 
     public void Start()
@@ -40,7 +41,7 @@ public class UImanager : MonoBehaviour
         //Pause event
         _InputClass.onTogglePause += HideMenu;
 
-        
+        sim = GameManager.Instance.GetSelectedSim();
     }
 
     private void Update()
@@ -48,9 +49,9 @@ public class UImanager : MonoBehaviour
 
         
         //World state updated 
-        _stateCMD.Process(GameManager.Instance.GetWorld());
-        
-       
+        _stateCMD.Process(sim.beliefs);
+        //_stateCMD.Process(GameManager.Instance.GetWorld());
+
     }
 
     private GameObject[] GetChildren()

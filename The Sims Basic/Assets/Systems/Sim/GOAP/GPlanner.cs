@@ -97,11 +97,11 @@ public class GPlanner
 
         }
 
-        //Debug.Log("The plan is: ");
+        Debug.Log("The plan is: ");
 
         foreach (GAction a in queue)
         {
-            //Debug.Log("Q: " + a.actionName);
+            Debug.Log("Q: " + a.actionName);
         }
 
         return queue;

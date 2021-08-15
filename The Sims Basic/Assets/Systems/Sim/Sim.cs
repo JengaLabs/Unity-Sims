@@ -10,6 +10,7 @@ public class Sim : GAgent
     private int GameWorldSpeed; 
     
     
+
     private void Awake()
     {
         GameManager.Instance.SelectSim(this);
@@ -17,19 +18,26 @@ public class Sim : GAgent
         
         inputClass = GameManager.Instance.GetInputClass();
         inputClass.onLeftClickedEnviroment += AddLocationGoal;
-        
+
+        //Sims start by just standing 
+        beliefs.AddState("Standing", 1);
     }
 
     private new void Start()
     {
         base.Start();
 
+        
+
         //All Sims want to be pasued 
         SubGoal s1 = new SubGoal("CommandsFollowed", 1, false);
         goals.Add(s1, 1);
-        //Add goals 
-        SubGoal s2 = new SubGoal("rested", 2, false);
-        goals.Add(s2, 2);
+        
+        
+
+        //Add the goal to want to sit
+        SubGoal s3 = new SubGoal("Sitting", 1, true);
+        goals.Add(s3, 1);
 
         //Invoke("GetCommand", Random.Range(10, 20));
         
@@ -59,6 +67,8 @@ public class Sim : GAgent
         tempGoal.tag = "Goal Location";
         inventory.AddItem(tempGoal);
     }
+
+    
 
     public void AddGoal(SubGoal subGoal)
     {

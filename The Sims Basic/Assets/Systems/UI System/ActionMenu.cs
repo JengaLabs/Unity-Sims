@@ -37,10 +37,7 @@ public class ActionMenu : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        
-    }
+    
 
     private void OpenActionMenu(string objectName)
     {
@@ -102,8 +99,8 @@ public class ActionMenu : MonoBehaviour
         //Close the menu and call the method for this specific button
         CloseActionMenu("close");
 
+        //For now just call the first action
         currentActions[0].CallGActions();
-        Debug.Log("Method for button");
 
         //Make button stop listening for event
         buttonObj.onClick.RemoveAllListeners();

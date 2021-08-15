@@ -306,10 +306,12 @@ GameObject:
   - component: {fileID: 151692912}
   - component: {fileID: 151692917}
   - component: {fileID: 151692918}
+  - component: {fileID: 151692920}
+  - component: {fileID: 151692919}
   - component: {fileID: 151692916}
   - component: {fileID: 151692915}
   m_Layer: 8
-  m_Name: Sim
+  m_Name: Sim 1
   m_TagString: Sim
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,10 +325,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151692910}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.8, y: 2.34, z: 0.032}
+  m_LocalPosition: {x: 0, y: 1.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 581475764}
+  m_Father: {fileID: 1435088335}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &151692912
@@ -458,9 +460,61 @@ MonoBehaviour:
   duration: 0
   preConditions:
   - key: CommandGiven
-    value: 0
+    value: 1
+  - key: Standing
+    value: 1
   afterEffects:
   - key: CommandsFollowed
+    value: 1
+  agent: {fileID: 0}
+  running: 0
+--- !u!114 &151692919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151692910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc72359cf8244ad4880f242eb4c140fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Sit Down
+  cost: 1
+  target: {fileID: 1207112205}
+  targetTag: 
+  duration: 1
+  preConditions:
+  - key: Standing
+    value: 1
+  afterEffects:
+  - key: Sitting
+    value: 1
+  - key: Standing
+    value: 0
+  agent: {fileID: 0}
+  running: 0
+--- !u!114 &151692920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151692910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb8d1ecf17c484a4c89aecbbafd1e720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Get Up
+  cost: 1
+  target: {fileID: 1207112205}
+  targetTag: 
+  duration: 0
+  preConditions: []
+  afterEffects:
+  - key: Standing
     value: 1
   agent: {fileID: 0}
   running: 0
@@ -474,7 +528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 197966289}
   m_Layer: 0
-  m_Name: World
+  m_Name: Game World
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,6 +545,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 581475764}
   - {fileID: 1902752830}
   - {fileID: 575414690}
   - {fileID: 1389330603}
@@ -750,6 +805,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textbox: {fileID: 125354556}
+--- !u!1 &571699736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 571699737}
+  m_Layer: 0
+  m_Name: Background Sims
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &571699737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571699736}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 581475764}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &575414689
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,10 +865,9 @@ Transform:
   - {fileID: 871807853}
   - {fileID: 61048676}
   - {fileID: 1171098020}
-  - {fileID: 1207112206}
   - {fileID: 1083906308}
   m_Father: {fileID: 197966289}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &581475763
 GameObject:
@@ -795,7 +879,7 @@ GameObject:
   m_Component:
   - component: {fileID: 581475764}
   m_Layer: 0
-  m_Name: Sims
+  m_Name: World Sims
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -808,13 +892,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581475763}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.2953396, y: -0.77539825, z: 3.2528305}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 151692911}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  - {fileID: 1435088335}
+  - {fileID: 571699737}
+  m_Father: {fileID: 197966289}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655603430
 GameObject:
@@ -1558,7 +1643,7 @@ Transform:
   m_LocalScale: {x: 20, y: 1, z: 20}
   m_Children: []
   m_Father: {fileID: 575414690}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 35.849003}
 --- !u!65 &1083906309
 BoxCollider:
@@ -1807,7 +1892,7 @@ Transform:
   m_LocalScale: {x: 20, y: 1, z: 20}
   m_Children: []
   m_Father: {fileID: 1389330603}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -24.09, y: 0, z: 0}
 --- !u!65 &1164215867
 BoxCollider:
@@ -2092,10 +2177,9 @@ GameObject:
   - component: {fileID: 1207112206}
   - component: {fileID: 1207112209}
   - component: {fileID: 1207112208}
-  - component: {fileID: 1207112207}
   m_Layer: 8
-  m_Name: Interactable object (1)
-  m_TagString: Untagged
+  m_Name: Chair
+  m_TagString: Chair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2107,26 +2191,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207112205}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.52, y: 0.76, z: -2.3}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -18.52, y: 1.21, z: -2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 575414690}
-  m_RootOrder: 3
+  m_Father: {fileID: 1389330603}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1207112207
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207112205}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1207112208
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2511,6 +2582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1389330603}
+  - component: {fileID: 1389330604}
   m_Layer: 8
   m_Name: Interactables
   m_TagString: Untagged
@@ -2529,10 +2601,23 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1207112206}
   - {fileID: 1164215866}
   m_Father: {fileID: 197966289}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1389330604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389330602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b18073eb11509547abf36bb282fbcbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1412724583
 GameObject:
   m_ObjectHideFlags: 0
@@ -2569,6 +2654,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!1 &1425274091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1425274092}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1425274092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425274091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1435088334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1435088335}
+  m_Layer: 0
+  m_Name: Household Sims
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1435088335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435088334}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 151692911}
+  m_Father: {fileID: 581475764}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455350284
 GameObject:
   m_ObjectHideFlags: 0
@@ -3225,7 +3371,7 @@ Transform:
   m_Children:
   - {fileID: 1455350286}
   m_Father: {fileID: 197966289}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005335332
 GameObject:

@@ -173,8 +173,11 @@ public class InputManager : MonoBehaviour
                 case 8:
                     
                     Debug.Log(hit.transform.gameObject.name + " this is an interactable");
-                    
-                    
+
+                    SubGoal s3 = new SubGoal("Sitting", 1, true);
+                    Sim mysim = GameManager.Instance.GetSelectedSim();
+                    mysim.AddGoal(s3);
+
                     //Set object as selected one
                     return true;
                     

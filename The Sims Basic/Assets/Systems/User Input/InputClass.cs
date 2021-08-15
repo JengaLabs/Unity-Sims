@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class InputClass 
+public class InputClass
 {
 
     public Vector3 StoredLocation;
@@ -25,7 +25,7 @@ public class InputClass
     public void CallClickedNothing()
     {
         //Check for subscribers
-        if(onNothingRightClicked != null)
+        if (onNothingRightClicked != null)
         {
             onNothingRightClicked();
         }
@@ -38,14 +38,14 @@ public class InputClass
     //left click, returns bool if what was hit is a gui or clickable
     public delegate bool leftClickedGUI();
 
-    private GameObject _Selected; 
+    private GameObject _Selected;
 
     //Delegate for mouse down
     public delegate void OnGuiInput();
 
     //Variable for delegate
     public OnGuiInput onGuiInput;
-    
+
 
     public void GUIinput()
     {
@@ -80,7 +80,7 @@ public class InputClass
         Debug.Log("Left clicked enviroment");
 
         //Check if anything is subscribed
-        if(onLeftClickedEnviroment != null)
+        if (onLeftClickedEnviroment != null)
         {
             //Call event with selected point
             onLeftClickedEnviroment(selectedPoint);
@@ -89,7 +89,7 @@ public class InputClass
         {
             Debug.Log("Nothing is subscribed");
         }
-        
+
     }
     #endregion
 
@@ -105,7 +105,7 @@ public class InputClass
     public void leftClickedGameObject(string _objectName)
     {
         //Check for subscribers
-        if(onClickedObject != null)
+        if (onClickedObject != null)
         {
             //Call event with string name
             onClickedObject(_objectName);
@@ -157,14 +157,15 @@ public class InputClass
         if (onTogglePause != null)
         {
             onTogglePause();
-        }else
+        }
+        else
         {
             Debug.Log("Nothing subscribed to toggle pause");
         }
     }
     #endregion
 
-    
+
 
 
     /// <summary>
@@ -176,6 +177,22 @@ public class InputClass
         return _Selected;
     }
 
+
+    #region Sim Related Delegates  
+
+    public delegate void GiveLocationGoal(Vector3 locationGoal);
+    
+
+
+
+
+
+
+    #endregion
+
+    #region Menu Related Actions 
+
+    #endregion
 
 
 

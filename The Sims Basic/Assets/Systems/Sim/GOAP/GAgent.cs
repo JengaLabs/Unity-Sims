@@ -67,7 +67,15 @@ public class GAgent : MonoBehaviour
 
         if (currentAction != null && currentAction.running && currentAction.target)
         {
-            if (currentAction.agent.hasPath && currentAction.agent.remainingDistance < 3f)
+
+            if (currentAction.agent.remainingDistance >= 3f)
+            {
+                if (currentAction.agent.hasPath == false)
+                {
+                    return;
+                }
+            }
+            else
             {
                 //has goal and has reached it 
                 if (!invoked)
@@ -76,8 +84,12 @@ public class GAgent : MonoBehaviour
                     invoked = true;
                 }
             }
+            
             return;
         }
+        
+        
+        
 
         if (planner == null || actionQueue == null)
         {
