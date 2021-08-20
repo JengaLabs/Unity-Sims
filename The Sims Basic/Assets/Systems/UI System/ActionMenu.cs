@@ -84,6 +84,8 @@ public class ActionMenu : MonoBehaviour
             //Resubscribe to the opening event
             InputEvents.onClickedObject += OpenActionMenu;
             InputEvents.onClickedObject -= CloseActionMenu;
+
+            RemoveAllButtonsListeners();
         }
         else
         {
@@ -102,7 +104,12 @@ public class ActionMenu : MonoBehaviour
         //For now just call the first action
         currentActions[0].CallGActions();
 
-        //Make button stop listening for event
+        
+    }
+
+    private void RemoveAllButtonsListeners()
+    {
+        //Make all buttons stop listening for events
         buttonObj.onClick.RemoveAllListeners();
     }
 

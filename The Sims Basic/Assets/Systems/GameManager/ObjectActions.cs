@@ -47,24 +47,3 @@ public class ObjectActions
         return actions[index];
     }
 }
-
-public abstract class Action
-{
-    public string _ActionName = "";
-    
-
-    public Action(string ActionName = "")
-    {
-        _ActionName = ActionName;
-        
-    }
-
-    public void CallGActions()
-    {
-        Perform();
-
-        
-    }
-
-    public abstract void Perform();
-}
