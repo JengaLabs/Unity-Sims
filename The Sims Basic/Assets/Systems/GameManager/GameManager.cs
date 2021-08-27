@@ -25,7 +25,7 @@ public sealed class GameManager
     //Stores all object actions by object names
     private static ObjectActionsStorage ActionStorage = new ObjectActionsStorage();
 
-    private static SoundManager SoundManager = new SoundManager();
+    
 
     public static GameManager Instance
     {
@@ -41,7 +41,7 @@ public sealed class GameManager
                 //Perform any code the game manager needs to like creating objects
                 world = new WorldStates();
                 _InputClass = new InputClass();
-                SoundManager = new SoundManager();
+                
             
             }
 

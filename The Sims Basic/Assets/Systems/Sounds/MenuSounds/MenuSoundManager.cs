@@ -13,7 +13,7 @@ public class MenuSoundManager : MonoBehaviour
     private void Awake()
     {
         //Get _audio source to use
-        //_AudioSource = this.gameObject.GetComponent(AudioSource);
+        _AudioSource = this.gameObject.GetComponent<AudioSource>();
 
         //Get audio clips from sound manager
 

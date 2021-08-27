@@ -2,30 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager 
+//Takes sound files and asigns them to specific sound managers 
+public class SoundManager : MonoBehaviour
 {
-    
-    //Handles calling audio sources sounds
-    public SoundManager()
+
+    //Audio source object
+    public AudioSource audioSourcePrefab;
+    //Audio source pool
+    private AudioSourcePool _AudioSourcePool;
+
+    //Sound files manager 
+    private SoundFilesManager _SoundsFilesManager;
+
+    //Data type for holding sounds and their names 
+    Dictionary<string, AudioClip> Clips = new Dictionary<string, AudioClip>();
+
+
+    private void Awake()
     {
+        //Create a audio source pool 
+        _AudioSourcePool = new AudioSourcePool(audioSourcePrefab);
+
+        //Create a sound files manager 
+        _SoundsFilesManager = new SoundFilesManager();
+
+        //Run sounds files manager 
+        _SoundsFilesManager.GetSoundFiles();
+
+        //Get sounds from sound file manager 
+        Clips = _SoundsFilesManager.GetAudioClips();
         
+        //Subscribe to sound inputs clss 
     }
 
 
-    #region Menu Sounds
-
-        
-
-    #endregion
-
-    #region Game Sounds
-
-
-    #endregion
-
-    #region World Sounds
+    
+    private void PlaySoundAtPoint(string SoundName, Vector3 position)
+    {
+        //Check audio exist 
+        if (ValidateSoundFile(SoundName))
+        {
+            _AudioSourcePool.PlayAtPoint(Clips[SoundName], position);
+        }
 
 
+        return;
+    }
 
-    #endregion
+    private bool ValidateSoundFile(string SoundName)
+    {
+        if (Clips.ContainsKey(SoundName))
+        {
+            return true;
+        }
+        Debug.Log("Audio file " + SoundName + " does not exist in audio clips.");
+        return false;
+    }
+
+    
+
+
+
 }
