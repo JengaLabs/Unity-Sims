@@ -5,6 +5,7 @@ using UnityEngine;
 //Takes sound files and asigns them to specific sound managers 
 public class SoundManager : MonoBehaviour
 {
+    
 
     //Audio source object
     public AudioSource audioSourcePrefab;
@@ -17,26 +18,34 @@ public class SoundManager : MonoBehaviour
     //Data type for holding sounds and their names 
     Dictionary<string, AudioClip> Clips = new Dictionary<string, AudioClip>();
 
+    //Input Events
+    private InputClass InputEvents;
+
 
     private void Awake()
     {
         //Create a audio source pool 
         _AudioSourcePool = new AudioSourcePool(audioSourcePrefab);
 
-        //Create a sound files manager 
-        _SoundsFilesManager = new SoundFilesManager();
-
-        //Run sounds files manager 
-        _SoundsFilesManager.GetSoundFiles();
+        //Get sound file manager
+        _SoundsFilesManager = GameManager.Instance.GetSoundFileManager();
 
         //Get sounds from sound file manager 
         Clips = _SoundsFilesManager.GetAudioClips();
-        
-        //Subscribe to sound inputs clss 
+
+        //Get input class
+        InputEvents = GameManager.Instance.GetInputClass();
+
+        InputEvents.onPlaySound += PlaySound;
     }
 
 
-    
+    private void PlaySound(string soundName)
+    {
+        PlaySoundAtPoint(soundName, Camera.main.transform.position);
+    }
+
+
     private void PlaySoundAtPoint(string SoundName, Vector3 position)
     {
         //Check audio exist 
@@ -48,6 +57,8 @@ public class SoundManager : MonoBehaviour
 
         return;
     }
+
+    
 
     private bool ValidateSoundFile(string SoundName)
     {

@@ -41,7 +41,8 @@ public class ActionMenu : MonoBehaviour
 
     private void OpenActionMenu(string objectName)
     {
-        //When menu is open, it shouldnt reopen upon clicking another object.
+        InputEvents.PlaySound("Menu_Open_1");
+        //When menu is open, it should close when clicking another object that isnt a button
         InputEvents.onClickedObject -= OpenActionMenu;
         InputEvents.onClickedObject += CloseActionMenu;
 
@@ -57,12 +58,6 @@ public class ActionMenu : MonoBehaviour
         //Move menu to mouse position
         this.thisPosition.anchoredPosition = Input.mousePosition;
 
-        //Set text to that objects name
-        //buttonText.text = objectName;
-        //
-        //m_firstAction = new UnityAction(currentActions[0].CallGActions);
-
-        //buttonObj.onClick.AddListener(m_firstAction);
         buttonObj.onClick.AddListener(ButtonMethod);
 
         
@@ -85,10 +80,14 @@ public class ActionMenu : MonoBehaviour
             InputEvents.onClickedObject += OpenActionMenu;
             InputEvents.onClickedObject -= CloseActionMenu;
 
+            //Remove any action listenrs
             RemoveAllButtonsListeners();
+
+            
         }
         else
         {
+           
             return;
         }
 
@@ -97,8 +96,10 @@ public class ActionMenu : MonoBehaviour
         
     private void ButtonMethod()
     {
-        
-        //Close the menu and call the method for this specific button
+        //Call close menu sound
+        InputEvents.PlaySound("Menu_Close_1");
+
+        //Close the menu and 
         CloseActionMenu("close");
 
         //For now just call the first action

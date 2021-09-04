@@ -181,7 +181,7 @@ public class InputClass
     #region Sim Related Delegates  
 
     public delegate void GiveLocationGoal(Vector3 locationGoal);
-    
+
 
 
 
@@ -194,7 +194,26 @@ public class InputClass
 
     #endregion
 
+    #region Sound Events
+    //When a script wants to call a sound by name
+    public delegate void OnPlaySound(string SoundName);
 
+    //Variable for listeners
+    public OnPlaySound onPlaySound;
+
+    public void PlaySound(string soundName)
+    {
+        if (onPlaySound != null)
+        {
+            onPlaySound(soundName);
+        }
+        else
+        {
+            Debug.Log("No subscribers to on play sound");
+        }
+    }
+
+    #endregion
 
 
 

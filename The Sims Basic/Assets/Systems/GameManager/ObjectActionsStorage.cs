@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ObjectActionsStorage 
+public class ObjectActionsStorage
 {
     //Store all objects names and assoicated actions groups
     public Dictionary<string, ObjectActions> ObjectActions = new Dictionary<string, ObjectActions>();
@@ -22,20 +22,29 @@ public class ObjectActionsStorage
         }
     }
 
-    
+
 
     public ObjectActionsStorage()
     {
-        EnviromentActions.AddAction(new GoTooLocation());
 
-        ObjectActions.Add("Enviroment", EnviromentActions);   
+        EnviromentActions.AddAction(new GoTooLocation());
+        ObjectActions.Add("Enviroment", EnviromentActions);
+
+        ChairActions.AddAction(new SitDownCommand());
+        ObjectActions.Add("Chair", ChairActions);
     }
 
     #region Enviroment Actions 
 
-    public ObjectActions EnviromentActions = new ObjectActions("Enviroment");
-    
-    
+    private ObjectActions EnviromentActions = new ObjectActions("Enviroment");
+
+
+
+    #endregion
+
+    #region Interactable Actions
+
+    private ObjectActions ChairActions = new ObjectActions("Chair");
 
     #endregion
 }

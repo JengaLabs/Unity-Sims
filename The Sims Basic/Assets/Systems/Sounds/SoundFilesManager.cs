@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-//Handles getting all sound files and handing them to the sound manager
+//Handles getting all sound files 
 public class SoundFilesManager
 {
     
@@ -14,7 +14,9 @@ public class SoundFilesManager
 
     public SoundFilesManager()
     {
-        SoundFileDirectory = Application.persistentDataPath;
+        SoundFileDirectory = Application.streamingAssetsPath;
+        GetSoundFiles();
+
     }
 
 
@@ -24,23 +26,35 @@ public class SoundFilesManager
     /// <returns></returns>
     public Dictionary<string, AudioClip> GetAudioClips()
     {
-        GetSoundFiles();
         return Clips;
     }
 
     public void GetSoundFiles()
     {
-        Debug.Log("Getting sound files ");
-        Object[] clips = Resources.FindObjectsOfTypeAll(typeof(AudioClip));
+        //Load all sound files and store them 
+        Object[] clips = Resources.LoadAll("", typeof(AudioClip));
+
         
         if(clips.Length <= 0)
         {
-            Debug.Log("No sound files found");
+            Debug.LogError("No sound files found in resources" + this);
             return;
         }
-        foreach(var obj in clips)
+
+        //Loop through every loaded clip
+        foreach(AudioClip clip in clips)
         {
-            Debug.Log(obj.name);
+            //Check if that clip name ins't used
+            if (!Clips.ContainsKey(clip.name))
+            {
+                //add that clip
+                Clips.Add(clip.name, clip);
+            }
+            else
+            {
+                Debug.Log("Clip already added");
+            }
+            
         }
     }
 
