@@ -13,6 +13,7 @@ public class SitDown : GAction
         //Check if chair already exist in item flow
         if (target != null)
         {
+            
             return true;
         }
         else
@@ -26,7 +27,6 @@ public class SitDown : GAction
             }
         }
 
-        //Remove chair from useable objects
 
 
 

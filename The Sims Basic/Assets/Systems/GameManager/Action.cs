@@ -21,4 +21,9 @@ public abstract class Action
     }
 
     public abstract void Perform();
+
+    public void SetName(string name)
+    {
+        _ActionName = name;
+    }
 }

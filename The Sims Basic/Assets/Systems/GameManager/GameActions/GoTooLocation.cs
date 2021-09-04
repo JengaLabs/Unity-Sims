@@ -6,6 +6,12 @@ public class GoTooLocation : Action
 {
 
     Sim currentSim; 
+
+    public GoTooLocation()
+    {
+        SetName("Go Here");
+    }
+    
     public override void Perform()
     {
         currentSim = GameManager.Instance.GetSelectedSim();

@@ -174,10 +174,17 @@ public class InputManager : MonoBehaviour
                     
                     Debug.Log(hit.transform.gameObject.name + " this is an interactable");
 
-
+                    /*
                     SubGoal s3 = new SubGoal("Sitting", 1, true);
                     Sim mysim = GameManager.Instance.GetSelectedSim();
                     mysim.AddGoal(s3);
+                    */
+
+                    //Store location clicked and object 
+                    _InputClass.StoredLocation = hit.point;
+                    _InputClass.StoredObject = hit.transform.gameObject;
+
+                    _InputClass.leftClickedGameObject(hit.transform.gameObject.name);
 
                     //Set object as selected one
                     return true;

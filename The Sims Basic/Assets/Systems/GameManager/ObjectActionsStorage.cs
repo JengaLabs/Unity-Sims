@@ -18,7 +18,7 @@ public class ObjectActionsStorage
         else
         {
             Debug.Log(ObjectName + " does not exist in the Object Actions Storage");
-            return null;
+            return ObjectActions["Enviroment"];
         }
     }
 

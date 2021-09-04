@@ -29,15 +29,13 @@ public class Sim : GAgent
 
         
 
-        //All Sims want to be pasued 
+        //All Sims want to finish all goals
         SubGoal s1 = new SubGoal("CommandsFollowed", 1, false);
         goals.Add(s1, 1);
         
         
 
-        //Add the goal to want to sit
-        SubGoal s3 = new SubGoal("Sitting", 1, true);
-        goals.Add(s3, 1);
+        
 
         //Invoke("GetCommand", Random.Range(10, 20));
         
