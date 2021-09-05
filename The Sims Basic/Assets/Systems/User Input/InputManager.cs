@@ -93,10 +93,7 @@ public class InputManager : MonoBehaviour
 
     }
     
-    private void test()
-    {
-        Debug.Log(EventSystem.current.IsPointerOverGameObject());
-    }
+    
 
 
     private bool IsMouseOverInteractable()
@@ -125,6 +122,7 @@ public class InputManager : MonoBehaviour
                     break;
                 case 2:
                     //This is ignored
+
                     //Debug.Log(raycastResults[i].gameObject.name + " this is ignored");
                     break;
                 case 5:
@@ -132,7 +130,7 @@ public class InputManager : MonoBehaviour
                     //Call the interactable script 
                     return true;
                     
-                
+
             }
 
 
@@ -203,7 +201,10 @@ public class InputManager : MonoBehaviour
         _InputClass.CallTogglePause();
     }
 
-    
+    public void CallExitGame()
+    {
+        Application.Quit();
+    }
 
 
 

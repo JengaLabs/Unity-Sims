@@ -57,6 +57,7 @@ public class CamFree : CameraState
 
         //Lock mouse and hide it
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         //Move to update
         base.Enter();
@@ -122,7 +123,8 @@ public class CamFree : CameraState
 
         //Keep cursor in game
         Cursor.lockState = CursorLockMode.Confined;
-        
+        //Make mouse visable
+        Cursor.visible = true;
         //Reset FOV 
         camera.fieldOfView = 60;
 
