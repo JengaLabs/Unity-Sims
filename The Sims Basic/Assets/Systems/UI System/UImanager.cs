@@ -78,6 +78,8 @@ public class UImanager : MonoBehaviour
         SetActiveStateForUI("ActionMenu");
     }
 
+    
+
     public void SetActiveStateForUI(string UIname)
     {
         foreach(UI_Class ui in UI_classes)

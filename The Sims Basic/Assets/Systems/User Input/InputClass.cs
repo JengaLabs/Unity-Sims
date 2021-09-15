@@ -192,6 +192,27 @@ public class InputClass
 
     #region Menu Related Actions 
 
+    //When a menu needs to be opened or hidden
+    public delegate void OnManipulateMenu(string menuName, bool hideStatus);
+
+    //Variable for delagate to listen to
+    public OnManipulateMenu manipulateMenu;
+
+    //Method to call when wanting to manipulate menu
+    public void ManipulateAMenu(string menuName, bool hideStatus)
+    {
+        //check for subscribers
+        if(manipulateMenu != null)
+        {
+            manipulateMenu(menuName, hideStatus);
+        }
+        else
+        {
+            Debug.LogError("Menu managers not subscribed to manipulate a menu");
+        }
+    }
+
+
     #endregion
 
     #region Sound Events
