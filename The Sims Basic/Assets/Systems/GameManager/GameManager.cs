@@ -44,7 +44,9 @@ public sealed class GameManager
                 world = new WorldStates();
                 _InputClass = new InputClass();
                 SoundFiles = new SoundFilesManager();
-            
+                ActionStorage = new ObjectActionsStorage();
+
+
             }
 
             return instance;

@@ -28,10 +28,7 @@ public class NormalCam : CameraState
 
     //Starting Mouse position
     Vector2 mouseOrigin;
-
-    //Distance mouse moved
-    float mouseMoveDistance = 0f;
-
+    
     //Store how zoomed in user is
     float _CurrentZoomLevel = 10f;
 
@@ -221,7 +218,6 @@ public class NormalCam : CameraState
     void GetMousePosition()
     {
         mouseOrigin = Input.mousePosition;
-        mouseMoveDistance = 0;
     }
 
     /// <summary>

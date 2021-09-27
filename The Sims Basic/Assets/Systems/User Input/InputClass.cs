@@ -165,6 +165,12 @@ public class InputClass
     }
     #endregion
 
+    #region Add Object Button Event
+
+    //When user wants to add a newe object
+    public delegate void OnAddObject(string objectName);
+
+    #endregion
 
 
 
