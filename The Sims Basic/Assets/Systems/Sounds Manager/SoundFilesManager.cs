@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.Audio;
 
 //Handles getting all sound files 
 public class SoundFilesManager
@@ -32,7 +33,7 @@ public class SoundFilesManager
     public void GetSoundFiles()
     {
         //Load all sound files and store them 
-        Object[] clips = Resources.LoadAll("", typeof(AudioClip));
+        object[] clips = (AudioClip[])Resources.LoadAll("", typeof(AudioClip));
 
         
         if(clips.Length <= 0)

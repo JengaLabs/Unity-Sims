@@ -13,7 +13,6 @@ public class ObjectActions
 
     public List<Action> actions = new List<Action>();
 
-
     /// <summary>
     /// Amount of action options a object has
     /// </summary>

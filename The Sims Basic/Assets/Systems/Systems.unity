@@ -154,7 +154,7 @@ Transform:
   m_LocalScale: {x: 20, y: 1, z: 20}
   m_Children: []
   m_Father: {fileID: 575414690}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &61048677
 BoxCollider:
@@ -283,12 +283,17 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a76f9cc3deea30d4bb202aa523cafd6c,
         type: 3}
       propertyPath: m_Name
-      value: oven
+      value: Oven01
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a76f9cc3deea30d4bb202aa523cafd6c,
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a76f9cc3deea30d4bb202aa523cafd6c,
+        type: 3}
+      propertyPath: m_TagString
+      value: object
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a76f9cc3deea30d4bb202aa523cafd6c, type: 3}
@@ -841,7 +846,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3165728d74ae97745a2f089dc94c0d66,
         type: 3}
       propertyPath: m_Name
-      value: Chair
+      value: Chair01
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3165728d74ae97745a2f089dc94c0d66,
         type: 3}
@@ -851,7 +856,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3165728d74ae97745a2f089dc94c0d66,
         type: 3}
       propertyPath: m_TagString
-      value: Chair
+      value: object
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3165728d74ae97745a2f089dc94c0d66, type: 3}
@@ -1055,8 +1060,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 871807853}
   - {fileID: 61048676}
+  - {fileID: 871807853}
   - {fileID: 1171098020}
   - {fileID: 1083906308}
   m_Father: {fileID: 197966289}
@@ -1304,7 +1309,7 @@ Transform:
   m_LocalScale: {x: 20, y: 1, z: 20}
   m_Children: []
   m_Father: {fileID: 575414690}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &871807854
 BoxCollider:
@@ -2500,6 +2505,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1425274092}
+  - component: {fileID: 1425274093}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -2521,6 +2527,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1425274093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425274091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d24b4e9eb75c7a428ee0a9b24d87a2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameData:
+    level: 5
+    time: 2
+    playerName: Bob
+  saveGame: 0
+  readGame: 0
 --- !u!1 &1435088334
 GameObject:
   m_ObjectHideFlags: 0
