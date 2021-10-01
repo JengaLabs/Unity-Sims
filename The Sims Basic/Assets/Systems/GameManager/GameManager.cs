@@ -31,8 +31,6 @@ public sealed class GameManager
 
     public static GameManager Instance
     {
-        
-
         get
         {
             //If the singleton doesn't exist, create one

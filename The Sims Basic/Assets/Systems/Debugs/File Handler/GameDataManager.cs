@@ -8,7 +8,8 @@ public class GameDataManager : MonoBehaviour
     string saveFile;
 
     [SerializeField]
-    myClass gameData = new myClass(5, 2, "Bob");
+    ObjectData gameData = new ObjectData("Chair");
+
 
     [SerializeField]
     bool saveGame = false;
@@ -45,7 +46,7 @@ public class GameDataManager : MonoBehaviour
             string fileContents = File.ReadAllText(saveFile);
 
             //Return int a pattern matching the game data class
-            gameData = JsonUtility.FromJson<myClass>(fileContents);
+            gameData = JsonUtility.FromJson<ObjectData>(fileContents);
         }
         else
         {
