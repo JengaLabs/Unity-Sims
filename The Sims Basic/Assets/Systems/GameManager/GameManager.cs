@@ -25,6 +25,10 @@ public sealed class GameManager
     //Stores all object actions by object names
     private static ObjectActionsStorage ActionStorage = new ObjectActionsStorage();
 
+    //Stores all object data
+    private static ObjectDataBase ObjectDataBaseSystem = new ObjectDataBase();
+
+
     //Sound file manager
     private static SoundFilesManager SoundFiles = new SoundFilesManager();
     
@@ -41,7 +45,6 @@ public sealed class GameManager
                 //Perform any code the game manager needs to like creating objects
                 world = new WorldStates();
                 _InputClass = new InputClass();
-                SoundFiles = new SoundFilesManager();
                 ActionStorage = new ObjectActionsStorage();
 
 
@@ -56,6 +59,10 @@ public sealed class GameManager
 
     #region Properties 
 
+    public ObjectDataBase GetObjectDataBase()
+    {
+        return ObjectDataBaseSystem;
+    }
     public SoundFilesManager GetSoundFileManager()
     {
         return SoundFiles;

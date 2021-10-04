@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
 public class ObjectData
 {
 
@@ -10,7 +12,7 @@ public class ObjectData
     string objectId;
 
     //Names of actions it can perform
-    List<string> actions = new List<string>();
+    public List<string> actions = new List<string>();
 
     //object reference to the mesh
     Mesh mesh;

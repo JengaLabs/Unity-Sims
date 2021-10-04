@@ -8,8 +8,7 @@ public class GameDataManager : MonoBehaviour
     string saveFile;
 
     [SerializeField]
-    ObjectData gameData = new ObjectData("Chair");
-
+    public ObjectData gameData = new ObjectData("Chair");
 
     [SerializeField]
     bool saveGame = false;
@@ -19,7 +18,12 @@ public class GameDataManager : MonoBehaviour
     void Awake()
     {
         saveFile = Application.persistentDataPath + "/gamedata.json";
-        Debug.Log(saveFile);
+        
+
+
+
+        //Log location of files
+        //Debug.Log(saveFile);
     }
 
     void Update()
@@ -73,6 +77,24 @@ public class GameDataManager : MonoBehaviour
             writeFile();
         }
        
+    }
+
+    /// <summary>
+    /// Check if a file is valid
+    /// </summary>
+    /// <returns></returns>
+    bool CheckFileValidity(string url)
+    {
+        if (File.Exists(url))
+        {
+            Debug.Log("Game object data exist");
+            return true;
+        }
+        else
+        {
+            Debug.Log("Url " + url + " does not exist");
+            return false;    
+        }
     }
 
 

@@ -33,7 +33,7 @@ public class SoundFilesManager
     public void GetSoundFiles()
     {
         //Load all sound files and store them 
-        object[] clips = (AudioClip[])Resources.LoadAll("", typeof(AudioClip));
+        object[] clips = Resources.LoadAll("", typeof(AudioClip));
 
         
         if(clips.Length <= 0)
