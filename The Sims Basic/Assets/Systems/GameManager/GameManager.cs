@@ -43,10 +43,9 @@ public sealed class GameManager
                 instance = new GameManager();
 
                 //Perform any code the game manager needs to like creating objects
-                world = new WorldStates();
-                _InputClass = new InputClass();
-                ActionStorage = new ObjectActionsStorage();
-
+                //world = new WorldStates();
+                //_InputClass = new InputClass();
+                //ActionStorage = new ObjectActionsStorage();
 
             }
 
@@ -54,6 +53,7 @@ public sealed class GameManager
         }
     }
 
+    
 
 
 

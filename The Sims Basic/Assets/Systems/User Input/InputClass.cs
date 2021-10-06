@@ -164,16 +164,7 @@ public class InputClass
         }
     }
     #endregion
-
-    #region Add Object Button Event
-
-    //When user wants to add a newe object
-    public delegate void OnAddObject(string objectName);
-
-    #endregion
-
-
-
+    
     /// <summary>
     /// Return the object selected by selected 
     /// </summary>
@@ -242,6 +233,27 @@ public class InputClass
 
     #endregion
 
+    #region Save Event
+
+    //When game object data needs to be saved.
+    public delegate void OnSaveDevFiles();
+
+    public OnSaveDevFiles OnSave;
+
+    public void SaveGame()
+    {
+        if(OnSave != null)
+        {
+            OnSave();
+        }
+        else
+        {
+            Debug.LogError("Dev files is not subscribed to save game event.");
+        }
+    }
+    
+
+    #endregion
 
 
 

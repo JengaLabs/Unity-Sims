@@ -40,5 +40,18 @@ public class ObjectData
         this.actions.Add(actionName);
     }
 
+    public string GetName()
+    {
+        return this.objectId;
+    }
+
+    /// <summary>
+    /// Amount of action options a object has
+    /// </summary>
+    /// <returns>Number of actions</returns>
+    public int AmountOfActions()
+    {
+        return actions.Count;
+    }
 
 }

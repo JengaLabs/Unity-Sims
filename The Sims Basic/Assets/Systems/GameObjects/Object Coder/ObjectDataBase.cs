@@ -5,20 +5,40 @@ using UnityEngine;
 public class ObjectDataBase
 {
     //A list that hold onto objects 
-    public Dictionary<string, ObjectData> objectData = new Dictionary<string, ObjectData>();
+    public Dictionary<string, ObjectData> _objectData = new Dictionary<string, ObjectData>();
 
     //Object saver and unloader 
-    public ObjectSaver objectSaver = new ObjectSaver();
+    private ObjectSaver objectSaver = new ObjectSaver();
 
     public ObjectDataBase()
     {
+        //Storage for files 
+        List<ObjectData> tempObjects = new List<ObjectData>();
 
+        //Get the save file
+        //tempObjects = objectSaver.LoadCurrentFileData();
+
+        ObjectData tempData = new ObjectData("Chair");
+        tempData.AddAction("Sit Down");
+
+        tempObjects.Add(tempData);
+
+        //Add those objects to the dictionary
+        foreach(ObjectData obj in tempObjects)
+        {
+            //Add that object to the list
+            AddObject(obj.GetName(), obj.actions);
+        }
     }
+
+    
 
     public void AddObject(string objectID, List<string> actions)
     {
-        if (FindObjectByName(objectID))
+        //Check if object already exist
+        if (!FindObjectByName(objectID))
         {
+            //Add that object to the list
             ObjectData data = new ObjectData(objectID);
             //loop through each possible action
             foreach(string act in actions)
@@ -27,11 +47,26 @@ public class ObjectDataBase
                 data.AddAction(act);
             }
             //Create that object
-            objectData.Add(objectID, data);
+            _objectData.Add(objectID, data);
         }
         else
         {
             Debug.Log("OBJECT ALREADY EXIST");
+
+
+            /*
+            //Check if any new actions are attached
+            foreach (string act in actions)
+            {
+                //If an action that doesnt exist yet is inside actions
+                if (!_objectData[objectID].actions.Contains(act))
+                {
+                    //Add that action to the group
+                    _objectData[objectID].AddAction(act);
+                }
+            }
+            */
+
         }
     }
 
@@ -46,13 +81,14 @@ public class ObjectDataBase
         if (FindObjectByName(objectName))
         {
             //add action to that object
-            objectData[objectName].AddAction(actionName);
+            _objectData[objectName].AddAction(actionName);
         }
     }
 
+    //Check if object exist
     public bool FindObjectByName(string objectId)
     {
-        if (objectData.ContainsKey(objectId))
+        if (_objectData.ContainsKey(objectId))
         {
             return true;
         }
@@ -67,9 +103,9 @@ public class ObjectDataBase
     {
         if (FindObjectByName(ObjectID))
         {
-            if (objectData[ObjectID].actions.Count > 0)
+            if (_objectData[ObjectID].actions.Count > 0)
             {
-                return objectData[ObjectID].actions;
+                return _objectData[ObjectID].actions;
             }
             else
             {
@@ -82,6 +118,24 @@ public class ObjectDataBase
         return null;
         
     }
+
+    public List<string> GetActions(string objectID)
+    {
+        if (FindObjectByName(objectID))
+        {
+            return _objectData[objectID].actions;
+
+        }
+
+        //Log that the objet did not exist
+        Debug.Log("Object does not exist in database");
+
+        List<string> tempString = new List<string>();
+        tempString.Add("Enviroment");
+
+        return tempString;
+    }
+
 
 
 }

@@ -22,7 +22,7 @@ public class ObjectSaver
         if (File.Exists(saveFileLocation))
         {
             //Open up the file 
-            Debug.Log("File already exist");
+            //Debug.Log("File already exist");
         }
         else
         {
@@ -43,9 +43,20 @@ public class ObjectSaver
     {
         //convert the file content to a string
         string fileContents = File.ReadAllText(saveFileLocation);
+
+        Debug.Log(fileContents);
+
+
+        //Store the json 
+        List<ObjectData> tempstor = JsonUtility.FromJson<List<ObjectData>>(fileContents);
+
+        Debug.Log(tempstor);
+
         //convert string to a list of object data
-        return JsonUtility.FromJson<List<ObjectData>>(fileContents);
+        return tempstor;
     }
+
+    
 
     
 

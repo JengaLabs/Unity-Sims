@@ -6,19 +6,27 @@ using UnityEngine.Events;
 
 public class ActionMenu : MonoBehaviour
 {
+    //Input events from user and game
     private InputClass InputEvents;
 
     private UnityAction m_firstAction;
 
+    //TEMP ACTION STORAGE
     private ObjectActionsStorage _ActionsStoarge;
 
-    //List of action for object selected
-    private List<Action> currentActions;
+    //Long term action storage
+    private ObjectDataBase _ObjectDataStorage;
+
+    //List of actions for object selected
+    private List<string> currentObjectActionNames;
+
+    //List of actaul actions classes
+    private List<Action> currentObjectActions = new List<Action>();
 
     //List of buttons for use
     private List<Button> buttons;
-
-
+    
+    //Current object
     private RectTransform thisPosition;
 
     //Prefab of a action button
@@ -32,8 +40,11 @@ public class ActionMenu : MonoBehaviour
         //Get Components 
         thisPosition = this.GetComponent<RectTransform>();
 
-        //Get action storage
+        //Get actions storage
         _ActionsStoarge = GameManager.Instance.GetActionsStorage();
+
+        //Get long term object storage
+        _ObjectDataStorage = GameManager.Instance.GetObjectDataBase();
 
         //Get input class
         InputEvents = GameManager.Instance.GetInputClass();
@@ -55,12 +66,15 @@ public class ActionMenu : MonoBehaviour
         InputEvents.onClickedObject -= OpenActionMenu;
         InputEvents.onClickedObject += ShutDownActionMenu;
 
-        //Get the objects actions 
-        ObjectActions objectActions = _ActionsStoarge.GetObjectActions(objectName);
+        //Get the objects actions names
+        currentObjectActionNames = _ObjectDataStorage.GetActions(objectName);
 
-        //Add actions to list
-        currentActions = objectActions.GetActions();
-
+        //Loop through every action
+        foreach(string name in currentObjectActionNames)
+        {
+            //add every action by the name
+            currentObjectActions.Add(_ActionsStoarge.GetActionByName(name));
+        }
 
         //Set Action menu active
         this.gameObject.SetActive(true);
@@ -150,11 +164,16 @@ public class ActionMenu : MonoBehaviour
         //Create a queue of buttons
         Queue<Button> Qbuttons = new Queue<Button>();
 
+        Debug.Log(Qbuttons.Count + " " + currentObjectActionNames.Count);
+
         //Check if more buttons are needed
-        for (int i = currentActions.Count - buttons.Count; i > 0; i = currentActions.Count - buttons.Count)
+        for (int i = currentObjectActionNames.Count - buttons.Count; i > 0; i = currentObjectActionNames.Count - buttons.Count)
         {
             CreateNewButton();
         }
+
+        Debug.Log(Qbuttons.Count + " " + currentObjectActionNames.Count);
+
 
         //Go through each button and enqueue them
         foreach (Button button in buttons)
@@ -164,8 +183,13 @@ public class ActionMenu : MonoBehaviour
         }
 
         //add actions to each button
-        foreach (Action action in currentActions)
+        foreach (Action action in currentObjectActions)
         {
+            if(Qbuttons.Count < currentObjectActions.Count)
+            {
+                CreateNewButton();
+
+            }
             //Get the next button
             Button currentButton = Qbuttons.Dequeue();
 

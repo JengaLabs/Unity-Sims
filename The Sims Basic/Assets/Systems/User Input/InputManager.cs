@@ -201,8 +201,13 @@ public class InputManager : MonoBehaviour
         _InputClass.CallTogglePause();
     }
 
+
+    //TODO get proper class for keeping track of game save states and calling event of the world being closed
     public void CallExitGame()
     {
+        Debug.Log("Exit game");
+        _InputClass.OnSave();
+
         Application.Quit();
     }
 
@@ -211,11 +216,4 @@ public class InputManager : MonoBehaviour
     {
 
     }
-
-
-
-
-
-
-
 }
