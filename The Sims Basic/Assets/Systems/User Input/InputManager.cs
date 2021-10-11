@@ -211,6 +211,11 @@ public class InputManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void SaveGame()
+    {
+        _InputClass.SaveGame();
+    }
+
 
     public void AddObject()
     {

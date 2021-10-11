@@ -251,10 +251,32 @@ public class InputClass
             Debug.LogError("Dev files is not subscribed to save game event.");
         }
     }
-    
+
 
     #endregion
 
+    #region InputString
+
+    //When user inputs a string 
+    public delegate void OnInputString(string input);
+
+    //Variable for delegates to listen too
+    public OnInputString onInputString;
+
+    public void SubmitInputString(string input)
+    {
+        if(onInputString != null)
+        {
+            onInputString(input);
+        }
+        else
+        {
+            Debug.Log("No listeners to input string");
+        }
+    }
+
+
+    #endregion
 
 
 }

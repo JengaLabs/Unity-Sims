@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ObjectDataBase
 {
@@ -8,27 +9,33 @@ public class ObjectDataBase
     public Dictionary<string, ObjectData> _objectData = new Dictionary<string, ObjectData>();
 
     //Object saver and unloader 
-    private ObjectSaver objectSaver = new ObjectSaver();
+    private ObjectSaver _objectSaver = new ObjectSaver();
+
+    private InputClass _inputClass;
 
     public ObjectDataBase()
     {
         //Storage for files 
         List<ObjectData> tempObjects = new List<ObjectData>();
 
+        //Input class to listen to 
+        _inputClass = GameManager.Instance.GetInputClass();
+
+        
+
         //Get the save file
-        //tempObjects = objectSaver.LoadCurrentFileData();
-
-        ObjectData tempData = new ObjectData("Chair");
-        tempData.AddAction("Sit Down");
-
-        tempObjects.Add(tempData);
+        tempObjects = _objectSaver.LoadCurrentFileData();
 
         //Add those objects to the dictionary
         foreach(ObjectData obj in tempObjects)
         {
+            //Debug.Log(obj.GetName());
             //Add that object to the list
             AddObject(obj.GetName(), obj.actions);
         }
+
+        //Add calls 
+        _inputClass.OnSave += SaveGame;
     }
 
     
@@ -38,7 +45,7 @@ public class ObjectDataBase
         //Check if object already exist
         if (!FindObjectByName(objectID))
         {
-            //Add that object to the list
+            //Add that object to the list if it does not exist
             ObjectData data = new ObjectData(objectID);
             //loop through each possible action
             foreach(string act in actions)
@@ -51,6 +58,7 @@ public class ObjectDataBase
         }
         else
         {
+            //Add object if it exist
             Debug.Log("OBJECT ALREADY EXIST");
 
 
@@ -94,7 +102,7 @@ public class ObjectDataBase
         }
         else
         {
-            Debug.Log("Object Data Base does not contain " + objectId);
+            //Debug.Log("Object Data Base does not contain " + objectId);
             return false;
         }
     }
@@ -128,12 +136,20 @@ public class ObjectDataBase
         }
 
         //Log that the objet did not exist
-        Debug.Log("Object does not exist in database");
+        Debug.Log("Actions for object " + objectID + " is not in the database");
 
         List<string> tempString = new List<string>();
         tempString.Add("Enviroment");
 
         return tempString;
+    }
+
+    public void SaveGame()
+    {
+        //Convert type to list
+        List<ObjectData> tempData = _objectData.Values.ToList();
+
+        _objectSaver.SaveGameActions(tempData);
     }
 
 

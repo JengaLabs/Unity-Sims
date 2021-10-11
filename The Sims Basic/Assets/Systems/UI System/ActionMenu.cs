@@ -164,15 +164,14 @@ public class ActionMenu : MonoBehaviour
         //Create a queue of buttons
         Queue<Button> Qbuttons = new Queue<Button>();
 
-        Debug.Log(Qbuttons.Count + " " + currentObjectActionNames.Count);
+
 
         //Check if more buttons are needed
         for (int i = currentObjectActionNames.Count - buttons.Count; i > 0; i = currentObjectActionNames.Count - buttons.Count)
         {
-            CreateNewButton();
+            Qbuttons.Enqueue(CreateNewButton());
         }
 
-        Debug.Log(Qbuttons.Count + " " + currentObjectActionNames.Count);
 
 
         //Go through each button and enqueue them
@@ -187,9 +186,10 @@ public class ActionMenu : MonoBehaviour
         {
             if(Qbuttons.Count < currentObjectActions.Count)
             {
-                CreateNewButton();
-
+                Qbuttons.Enqueue(CreateNewButton());
             }
+
+
             //Get the next button
             Button currentButton = Qbuttons.Dequeue();
 
@@ -207,7 +207,7 @@ public class ActionMenu : MonoBehaviour
 
     }
 
-    private void CreateNewButton()
+    private Button CreateNewButton()
     {
         //Instantiate new button
         GameObject newButton = Instantiate(actionButton, this.transform);
@@ -217,6 +217,7 @@ public class ActionMenu : MonoBehaviour
         //Add new action button
         buttons.Add(newButton.GetComponent<Button>());
 
+        return buttons[buttons.Count - 1];
     }
 
 }

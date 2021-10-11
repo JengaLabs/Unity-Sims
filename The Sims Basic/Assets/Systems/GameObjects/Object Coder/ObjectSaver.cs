@@ -11,6 +11,8 @@ public class ObjectSaver
     // The save file containing objects
     string saveFileLocation;
 
+    ObjectDataList dataList = new ObjectDataList();
+
 
     /// <summary>
     /// Object saver that takes name of the file you want to save as
@@ -34,7 +36,9 @@ public class ObjectSaver
 
     public void SaveGameActions(List<ObjectData> objectdata)
     {
-        string stringData = JsonUtility.ToJson(objectdata);
+
+        dataList.dataList = objectdata;
+        string stringData = JsonUtility.ToJson(dataList);
 
         File.WriteAllText(saveFileLocation, stringData);
     }
@@ -44,31 +48,19 @@ public class ObjectSaver
         //convert the file content to a string
         string fileContents = File.ReadAllText(saveFileLocation);
 
-        Debug.Log(fileContents);
-
+        //Debug.Log(fileContents);
 
         //Store the json 
-        List<ObjectData> tempstor = JsonUtility.FromJson<List<ObjectData>>(fileContents);
-
-        Debug.Log(tempstor);
+        dataList = JsonUtility.FromJson<ObjectDataList>(fileContents);
 
         //convert string to a list of object data
-        return tempstor;
+        return dataList.dataList;
     }
-
-    
-
-    
-
-    
-    
+}
 
 
-
-
-
-
-
-
-
+[System.Serializable]
+public class ObjectDataList
+{
+    public List<ObjectData> dataList;
 }

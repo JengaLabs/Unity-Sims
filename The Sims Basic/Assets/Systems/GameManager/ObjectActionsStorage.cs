@@ -13,7 +13,7 @@ public class ObjectActionsStorage
 
         //TODO store this list in a save file so commands can be manipulated to what they corrospond to and what can be added 
         ActionValues.Add("Sit Down", new SitDownCommand());
-        ActionValues.Add("Enviroment", new GoTooLocation());
+        ActionValues.Add("Go Too", new GoTooLocation());
 
 
        

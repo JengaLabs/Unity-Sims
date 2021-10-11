@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine;using System.IO;
+using System;
 
 
-[System.Serializable]
+[Serializable]
 public class ObjectData
 {
 
     //the id of the object
     [SerializeField]
-    string objectId;
+    public string objectId;
 
+    [SerializeField]
     //Names of actions it can perform
     public List<string> actions = new List<string>();
 
