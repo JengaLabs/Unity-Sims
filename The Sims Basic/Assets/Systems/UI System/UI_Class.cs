@@ -26,8 +26,20 @@ public class UI_Class
 
     public void HideAllUI()
     {
+        thisObject.SetActive(false);
+    }
+
+    public void ShowAllUI()
+    {
+        thisObject.SetActive(true);
+    }
+
+    public void ReverseUIState()
+    {
         thisObject.SetActive(!thisObject.activeSelf);
     }
+
+    
 
     
 

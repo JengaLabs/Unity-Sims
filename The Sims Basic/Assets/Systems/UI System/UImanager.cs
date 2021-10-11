@@ -37,9 +37,15 @@ public class UImanager : MonoBehaviour
         //Hide the action menu
         HideActionMenu();
 
+        //Hide Dev console
+        HideConsole();
+
         //subscribe to input classes
         //Pause event
         _InputClass.onTogglePause += HideMenu;
+
+        //set a state for a menu event
+        _InputClass.manipulateMenu += SetActiveStateForUI;
 
         sim = GameManager.Instance.GetSelectedSim();
     }
@@ -48,7 +54,7 @@ public class UImanager : MonoBehaviour
     {
 
         
-        //World state updated 
+        //sim world state updated 
         _stateCMD.Process(sim.beliefs);
         //_stateCMD.Process(GameManager.Instance.GetWorld());
 
@@ -78,6 +84,11 @@ public class UImanager : MonoBehaviour
         SetActiveStateForUI("ActionMenu");
     }
 
+    private void HideConsole()
+    {
+        SetActiveStateForUI("Debug UI");
+    }
+
     
 
     public void SetActiveStateForUI(string UIname)
@@ -86,7 +97,7 @@ public class UImanager : MonoBehaviour
         {
             if(ui.name == UIname)
             {
-                ui.HideAllUI();
+                ui.ReverseUIState();
                 return;
             }
         }
@@ -94,6 +105,26 @@ public class UImanager : MonoBehaviour
         Debug.Log("No ui object with name " + UIname);
     }
 
+    public void SetActiveStateForUI(string UIname, bool state)
+    {
+        foreach (UI_Class ui in UI_classes)
+        {
+            if (ui.name == UIname)
+            {
+                if(state == true)
+                {
+                    ui.ShowAllUI();
+                }
+                else
+                {
+                    ui.HideAllUI();
+                }
+                return;
+            }
+        }
+
+        Debug.Log("No ui object with name " + UIname);
+    }
 
 
 

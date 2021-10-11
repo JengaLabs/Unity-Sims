@@ -26,10 +26,17 @@ public class ObjectDataBase
         //Get the save file
         tempObjects = _objectSaver.LoadCurrentFileData();
 
+        /*
+        ObjectData tempObject = new ObjectData("Enviroment");
+        tempObject.actions.Add("Go Too");
+        tempObjects.Add(tempObject);
+        */
+
         //Add those objects to the dictionary
         foreach(ObjectData obj in tempObjects)
         {
             //Debug.Log(obj.GetName());
+            
             //Add that object to the list
             AddObject(obj.GetName(), obj.actions);
         }

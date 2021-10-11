@@ -278,5 +278,31 @@ public class InputClass
 
     #endregion
 
+    #region Open Developer Console
+
+    //When the developer console needs to be opened
+    public delegate void OnOpenDevloperConsole();
+
+    //Variable to subsribe to
+    public OnOpenDevloperConsole onDeveloperOpenConsole;
+
+    //Method to call 
+    public void ToggleDevloperMenu()
+    {
+        //check for subscribers
+        if (onDeveloperOpenConsole != null)
+        {
+            //call subsribers
+            onDeveloperOpenConsole();
+        }
+        else
+        {
+            Debug.LogError("Nothing subscribed to console");
+        }
+    }
+
+
+    #endregion
+
 
 }

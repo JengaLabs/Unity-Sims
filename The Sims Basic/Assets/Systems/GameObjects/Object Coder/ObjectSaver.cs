@@ -50,8 +50,17 @@ public class ObjectSaver
 
         //Debug.Log(fileContents);
 
+        //Check if empty
+        if (fileContents == null || fileContents == "")  
+        {
+            return new List<ObjectData>();
+        }
+
+
         //Store the json 
         dataList = JsonUtility.FromJson<ObjectDataList>(fileContents);
+
+        
 
         //convert string to a list of object data
         return dataList.dataList;

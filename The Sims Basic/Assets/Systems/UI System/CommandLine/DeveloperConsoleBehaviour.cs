@@ -23,6 +23,9 @@ public class DeveloperConsoleBehaviour : MonoBehaviour
 
     private DeveloperConsole developerConsole;
 
+    //Keep track of world delegates
+    private InputClass _InputClass;
+
     private DeveloperConsole DeveloperConsole
     {
         get
@@ -45,15 +48,26 @@ public class DeveloperConsoleBehaviour : MonoBehaviour
 
         instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
+
+        //get the input class 
+        _InputClass = GameManager.Instance.GetInputClass();
+
+        //Set the developer console as the current input
+        _InputClass.onDeveloperOpenConsole += Toggle;
+
     }
 
     public void Toggle()
     {
-        if (uiCanvas.activeSelf)
+        Debug.Log("Toggling dev console");
+        
+        if (!uiCanvas.activeSelf)
         {
+            
             Time.timeScale = pausedTimeScale;
-            uiCanvas.SetActive(false);
+            //Set the canvas active
+            _InputClass.ManipulateAMenu("Debug UI", true);
         }
         else
         {
@@ -61,9 +75,10 @@ public class DeveloperConsoleBehaviour : MonoBehaviour
             pausedTimeScale = Time.timeScale;
             //Set time scale
             Time.timeScale = 0;
-            //Set ui active
-            uiCanvas.SetActive(true);
-            inputField.ActivateInputField();
+            //Set ui console true
+            _InputClass.ManipulateAMenu("Debug UI", false);
+
+            //inputField.ActivateInputField();
         }
     }
 

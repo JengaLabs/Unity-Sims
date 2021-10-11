@@ -88,6 +88,15 @@ public class InputManager : MonoBehaviour
             _InputClass.EscapeButtonDown();
         }
 
+        //When user performs input command
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            //Open Dev console
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                _InputClass.ToggleDevloperMenu();
+            }
+        }
         
 
 
@@ -216,9 +225,11 @@ public class InputManager : MonoBehaviour
         _InputClass.SaveGame();
     }
 
-
     public void AddObject()
     {
 
     }
+
+    
+
 }
