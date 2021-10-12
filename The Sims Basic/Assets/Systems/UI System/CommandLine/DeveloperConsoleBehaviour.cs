@@ -74,7 +74,7 @@ public class DeveloperConsoleBehaviour : MonoBehaviour
             //cache time scale
             pausedTimeScale = Time.timeScale;
             //Set time scale
-            Time.timeScale = 0;
+            Time.timeScale = 1;
             //Set ui console true
             _InputClass.ManipulateAMenu("Debug UI", false);
 

@@ -10,7 +10,7 @@ public class ActionMenu : MonoBehaviour
     private InputClass InputEvents;
 
     private UnityAction m_firstAction;
-
+    
     //TEMP ACTION STORAGE
     private ObjectActionsStorage _ActionsStoarge;
 
@@ -25,13 +25,17 @@ public class ActionMenu : MonoBehaviour
 
     //List of buttons for use
     private List<Button> buttons;
-    
+
+    //Create a queue of buttons
+    Queue<Button> Qbuttons;
+
     //Current object
     private RectTransform thisPosition;
 
     //Prefab of a action button
     public GameObject actionButton;
 
+    
 
     private string currentObject = null;
 
@@ -53,7 +57,7 @@ public class ActionMenu : MonoBehaviour
         InputEvents.onClickedObject += OpenActionMenu;
 
         buttons = new List<Button>();
-
+        Qbuttons = new Queue<Button>();
     }
 
 
@@ -69,6 +73,9 @@ public class ActionMenu : MonoBehaviour
         //Get the objects actions names
         currentObjectActionNames = _ObjectDataStorage.GetActions(objectName);
 
+        //Reset the current object actions
+        currentObjectActions.Clear();
+
         //Loop through every action
         foreach(string name in currentObjectActionNames)
         {
@@ -82,7 +89,6 @@ public class ActionMenu : MonoBehaviour
         this.thisPosition.anchoredPosition = Input.mousePosition;
 
         AddAllButtonListeners();
-
 
     }
 
@@ -157,39 +163,34 @@ public class ActionMenu : MonoBehaviour
         {
             button.onClick.RemoveAllListeners();
         }
+        Qbuttons.Clear();
     }
 
-    private void AddAllButtonListeners()
+    private void AddAllButtonListeners(int numberOfButtons = 10)
     {
-        //Create a queue of buttons
-        Queue<Button> Qbuttons = new Queue<Button>();
-
-
-
-        //Check if more buttons are needed
-        for (int i = currentObjectActionNames.Count - buttons.Count; i > 0; i = currentObjectActionNames.Count - buttons.Count)
+        if(buttons.Count <= numberOfButtons)
         {
-            Qbuttons.Enqueue(CreateNewButton());
+            buttons.Add(CreateNewButton());
+            AddAllButtonListeners();
+            return;
         }
 
 
-
-        //Go through each button and enqueue them
         foreach (Button button in buttons)
         {
-            button.gameObject.SetActive(false);
             Qbuttons.Enqueue(button);
         }
+
+
+
+
+
+        int moveButton = 0;
 
         //add actions to each button
         foreach (Action action in currentObjectActions)
         {
-            if(Qbuttons.Count < currentObjectActions.Count)
-            {
-                Qbuttons.Enqueue(CreateNewButton());
-            }
-
-
+            
             //Get the next button
             Button currentButton = Qbuttons.Dequeue();
 
@@ -197,6 +198,8 @@ public class ActionMenu : MonoBehaviour
             currentButton.onClick.AddListener(ButtonMethod);
             currentButton.onClick.AddListener(action.CallGActions);
             currentButton.GetComponentInChildren<Text>().text = action._ActionName;
+            currentButton.transform.position = currentButton.transform.position + new Vector3(moveButton, 0, 0);
+            moveButton += 50;
             currentButton.gameObject.SetActive(true);
         }
 
@@ -215,9 +218,8 @@ public class ActionMenu : MonoBehaviour
         //set new buttons transform parrent
         //newButton.transform.parent = this.transform;
         //Add new action button
-        buttons.Add(newButton.GetComponent<Button>());
 
-        return buttons[buttons.Count - 1];
+        return newButton.GetComponent<Button>();
     }
 
 }
