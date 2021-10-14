@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //State machine base class
-public class CameraState 
+public class CameraState
 {
-    
+
     //Enum holding all camera states
     public enum CAMERA_STATE
     {
@@ -13,8 +13,6 @@ public class CameraState
         TAKEAWAY, //Standard dtycoon game camera
         FREECAM, //More of a dev camera to get close up and personal
     }
-    
-    
 
     //Progress through states or the current Act
     public enum EVENT
@@ -32,9 +30,34 @@ public class CameraState
     protected EVENT stage;
     //Store the next state 
     public CameraState nextState;
-
     //The actual camera
     protected GameObject playerCamera;
+
+    /// <summary>
+    /// Cameras current Move speed.
+    /// </summary>
+    public float CameraMoveSpeed
+    {
+        get { return 10;  }
+    }
+
+
+    /// <summary>
+    /// Camera input movement on the right axis.
+    /// </summary>
+    public float HorizontalInput
+    {
+        get { return Input.GetAxis("Horizontal"); }
+    }
+
+    /// <summary>
+    /// Camera input movement on the forward axis.
+    /// </summary>
+    public float VerticalInput
+    {
+        get { return Input.GetAxis("Vertical"); }
+    }
+
 
     public CameraState(GameObject _camera)
     {
@@ -73,6 +96,17 @@ public class CameraState
             return nextState;
         }
         return this;
+    }
+
+
+    /// <summary>
+    /// Rotate the camera to look at the anchor.
+    /// </summary>
+    /// <param name="CameraObject">Actual Camera</param>
+    /// <param name="AnchorPosition">The position of the anchor.</param>
+    public void CameraLookAtAnchor(GameObject CameraObject, Vector3 AnchorPosition)
+    {
+        CameraObject.transform.LookAt(AnchorPosition);
     }
 
 

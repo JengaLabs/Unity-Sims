@@ -20,8 +20,13 @@ public class NormalCam : CameraState
     //Main Camera
     Camera camera;
 
-    //Anchor Point for camera
-    Vector3 anchorPoint;
+    /// <summary>
+    /// Object camera is mounted and rotates around.
+    /// </summary>
+    Vector3 anchorPoint
+    {
+        get { return myAnchor.transform.position; }
+    }
 
     //Camera's height from anchor
     float camHeight;
@@ -38,8 +43,7 @@ public class NormalCam : CameraState
 
     //If mouse is being used to rotate camera
     bool orbitCamera = false;
-    //If keys are being used for typing
-    bool userTyping = false;
+    
 
 
 
@@ -58,11 +62,6 @@ public class NormalCam : CameraState
         //Obtain input class
         _InputClass = GameManager.Instance.GetInputClass();
 
-
-        //Event that game is in normal mode
-
-
-
         //Get camera height
         camHeight = cameraObject.transform.position.y;
 
@@ -70,8 +69,7 @@ public class NormalCam : CameraState
         MoveToAnchor();
 
         //Move camera to correct position for a frame
-        LookAtAnchor();
-
+        CameraLookAtAnchor(cameraObject, anchorPoint);
 
        
 
@@ -88,11 +86,15 @@ public class NormalCam : CameraState
 
     public override void Update()
     {
-        if (!userTyping)
-        {
-            BasicMovement();
-        }
+        
+        BasicMovement();
 
+        if (Input.GetKey(KeyCode.B))
+        {
+            nextState = new CamFollow(cameraObject, GameManager.Instance.GetSelectedSim().gameObject, true);
+            stage = EVENT.EXIT;
+            return;
+        }
 
         //Check if camera should be orbiting
         if (orbitCamera)
@@ -100,12 +102,7 @@ public class NormalCam : CameraState
             OrbitAnchor();
         }
 
-        ////Check if zooming in and out wiht mouse enabled
-        //if (!EventSystem.current.IsPointerOverGameObject())
-        //{
-        //    //ScrollInput();
-        //    ExponetialCameraScroll();
-        //}
+
         LocalSmoothScroll();
 
 
@@ -114,7 +111,6 @@ public class NormalCam : CameraState
 
         //OrbitAnchor();
 
-        //LookAtAnchor();
 
 
 
@@ -139,13 +135,8 @@ public class NormalCam : CameraState
     /// </summary>
     private void BasicMovement()
     {
-        //Get WASD inputs
-        float HorizontalInput = Input.GetAxis("Horizontal");
-        float VerticalInput = Input.GetAxis("Vertical");
-
-        //For now a local var for speed multiplier
-        float moveSpeed = 10;
-
+        /* Remove double speed check and have a seperate event change the camera move speed.
+        //Temp check for speed multiplier 
         if (Input.GetKey(KeyCode.LeftShift))
         {
             moveSpeed = 25;
@@ -154,11 +145,11 @@ public class NormalCam : CameraState
         {
             moveSpeed = 10;
         }
-
+        */
         //Set x position
-        myAnchor.transform.Translate(Vector3.forward * Time.deltaTime * VerticalInput * moveSpeed);
+        myAnchor.transform.Translate(Vector3.forward * Time.deltaTime * VerticalInput * CameraMoveSpeed);
         //Set z position
-        myAnchor.transform.Translate(Vector3.right * Time.deltaTime * HorizontalInput * moveSpeed);
+        myAnchor.transform.Translate(Vector3.right * Time.deltaTime * HorizontalInput * CameraMoveSpeed);
         //Find y position
         myAnchor.transform.Translate(Vector3.down * Time.deltaTime * FixAnchorHeight(myAnchor.transform.position));
     }
@@ -202,13 +193,7 @@ public class NormalCam : CameraState
         return 0;
     }
 
-    /// <summary>
-    /// Switch keyboard movement to allow input from keyboard to effect anchor.
-    /// </summary>
-    private void SwitchToKeyboardMovement()
-    {
-
-    }
+   
 
     #region Mouse Movements
 
@@ -237,7 +222,7 @@ public class NormalCam : CameraState
             myAnchor.transform.Rotate(Vector3.up, xRot);
 
             //Continue to look at anchor
-            LookAtAnchor();
+            CameraLookAtAnchor(cameraObject, anchorPoint);
         }
 
         //Check if player stops camera orbit
@@ -248,14 +233,7 @@ public class NormalCam : CameraState
         }
     }
 
-    /// <summary>
-    /// Rotate camera to look at anchor
-    /// </summary>
-    private void LookAtAnchor()
-    {
-        cameraObject.transform.LookAt(myAnchor.transform.position);
-    }
-
+    
     /// <summary>
     /// Switcch camera orbit to the opposite bool.
     /// </summary>
@@ -324,7 +302,7 @@ public class NormalCam : CameraState
 
 
         //Reset view at anchor
-        LookAtAnchor();
+        CameraLookAtAnchor(cameraObject, anchorPoint);
     }
 
 
@@ -355,7 +333,7 @@ public class NormalCam : CameraState
         }
 
         //Reset view
-        LookAtAnchor();
+        CameraLookAtAnchor(cameraObject, anchorPoint);
     }
 
     #endregion
@@ -387,10 +365,6 @@ public class NormalCam : CameraState
     #endregion
 
 
-    #region Anchor
-    //The center point of which the camera orbits and moves off of. 
-
-
-    #endregion
+    
 
 }

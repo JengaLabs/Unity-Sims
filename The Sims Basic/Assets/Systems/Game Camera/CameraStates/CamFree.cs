@@ -11,9 +11,7 @@ public class CamFree : CameraState
 
     //Variables for camera paused
 
-    //Movement variables
-    float HorizontalInput;
-    float VerticalInput;
+
     
 
     //Camera objecct
@@ -68,9 +66,6 @@ public class CamFree : CameraState
     public override void Update()
     {
         //Debug.Log("Updating");
-        //Wasd controls for moving around 
-        HorizontalInput = Input.GetAxis("Horizontal");
-        VerticalInput = Input.GetAxis("Vertical");
 
         if (Input.GetKey(KeyCode.LeftShift))
         {

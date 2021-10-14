@@ -15,38 +15,86 @@ public class CamFollow : CameraState
 
 
     */
-    //Store reference to camera
-    private GameObject camera;
+    
+    /// <summary>
+    /// Reference to actual camera object.
+    /// </summary>
+    private GameObject Camera;
 
-    //Reference to camera anchor
-    private GameObject myAnchor;
+    /// <summary>
+    /// Object camera is mounted and rotates around.
+    /// </summary>
+    private GameObject MyCameraAnchor;
 
-    //Constructor for follow state
-    public CamFollow(GameObject _camera)
+    /// <summary>
+    /// Object that should be followed
+    /// </summary>
+    private GameObject TrackingObject;
+
+
+    
+
+    
+
+    /// <summary>
+    /// Camera will follow a given object
+    /// </summary>
+    /// <param name="_camera">Camera Object</param>
+    /// <param name="continueFollowing">Enter true to continue following the given object.</param>
+    /// <param name="ObjectToFollow">The Object you wish to follow. </param>
+    public CamFollow(GameObject _camera, GameObject ObjectToFollow , bool continueFollowing)
         : base(_camera)
     {
         //get the camera object
-        camera = _camera;
+        Camera = _camera;
         //Get the camera anchor
-        myAnchor = camera.transform.parent.gameObject;
+        MyCameraAnchor = Camera.transform.parent.gameObject;
 
+        //Get the object the camera should be following
+        TrackingObject = ObjectToFollow;
     }
 
     public override void Enter()
     {
+        
+
+
         base.Enter();
     }
 
     public override void Update()
     {
+        
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Debug.Log("Help");
+            nextState = new NormalCam(Camera);
+            stage = EVENT.EXIT;
+        }
+
+        
+        MoveCameraTorwardsPosition(TrackingObject.transform.position);
+        
 
 
-        base.Update();
     }
 
     public override void Exit()
     {
+        Debug.Log("Leaving");
         base.Exit();
+    }
+
+
+
+    private void MoveCameraTorwardsPosition(Vector3 position)
+    {
+        //Move the camera anchor to the correct position
+        MyCameraAnchor.transform.position = Vector3.MoveTowards(MyCameraAnchor.transform.position, position, CameraMoveSpeed);
+
+        //Look at anchor
+        CameraLookAtAnchor(Camera, MyCameraAnchor.transform.position);
     }
 
 }
