@@ -17,7 +17,7 @@ public class CamPaused : CameraState
     //Store reference to input manager
     private InputClass _InputClass;
 
-
+    
 
     //Constructor for paused state
     public CamPaused(GameObject _camera)

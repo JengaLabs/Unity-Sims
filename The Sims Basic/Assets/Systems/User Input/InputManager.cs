@@ -6,11 +6,8 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    //MonoBehaviour that tracks input
-    //Reports what kind of input to game managers input class delegates
 
 
-    //private GameObject selected = null;
 
 
 
@@ -23,9 +20,9 @@ public class InputManager : MonoBehaviour
     Camera mainCamera;
 
 
+    //That only cast rays against colliders in layer 2
     //Bit shift the index of the layer (2) to get a bit mask
     int layerMask = 1 << 2;
-    //That only cast rays against colliders in layer 2
 
     
 
@@ -33,23 +30,20 @@ public class InputManager : MonoBehaviour
 
     void Start()
     {
-        //if you want to check everthing but the declared layer use
+        //check everthing but the declared layer use
         layerMask = ~layerMask;
 
         
         mainCamera = Camera.main;
 
         _InputClass = GameManager.Instance.GetInputClass();
-        if (_InputClass == null) 
-        {
-            //Debug.Log("Game Manager input class is null");
-        }
+        
 
     }
 
     void Update()
     {
-
+        
 
         #region Mouse Inputs 
 
@@ -225,11 +219,7 @@ public class InputManager : MonoBehaviour
         _InputClass.SaveGame();
     }
 
-    public void AddObject()
-    {
-
-    }
-
+    
     
 
 }

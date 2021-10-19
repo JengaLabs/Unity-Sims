@@ -31,6 +31,10 @@ public class CamFollow : CameraState
     /// </summary>
     private GameObject TrackingObject;
 
+    /// <summary>
+    /// If camera should continue following object
+    /// </summary>
+    private bool _ContinueFollowing = false;
 
     
 
@@ -42,7 +46,7 @@ public class CamFollow : CameraState
     /// <param name="_camera">Camera Object</param>
     /// <param name="continueFollowing">Enter true to continue following the given object.</param>
     /// <param name="ObjectToFollow">The Object you wish to follow. </param>
-    public CamFollow(GameObject _camera, GameObject ObjectToFollow , bool continueFollowing)
+    public CamFollow(GameObject _camera, GameObject ObjectToFollow , bool continueFollowing = false)
         : base(_camera)
     {
         //get the camera object
@@ -56,7 +60,10 @@ public class CamFollow : CameraState
 
     public override void Enter()
     {
-        
+        if(_ContinueFollowing == true)
+        {
+            MoveCameraTooPosition(TrackingObject.transform.position);
+        }
 
 
         base.Enter();
@@ -88,6 +95,10 @@ public class CamFollow : CameraState
 
 
 
+    /// <summary>
+    /// Move camera torwards object
+    /// </summary>
+    /// <param name="position"></param>
     private void MoveCameraTorwardsPosition(Vector3 position)
     {
         //Move the camera anchor to the correct position
@@ -95,6 +106,26 @@ public class CamFollow : CameraState
 
         //Look at anchor
         CameraLookAtAnchor(Camera, MyCameraAnchor.transform.position);
+    }
+
+
+    /// <summary>
+    /// Continue moving camera torwards a given location.
+    /// </summary>
+    /// <param name="position"></param>
+    private void MoveCameraTooPosition(Vector3 position)
+    {
+        //Move the camera anchor to the correct position
+        MyCameraAnchor.transform.position = Vector3.MoveTowards(MyCameraAnchor.transform.position, position, CameraMoveSpeed);
+
+        //Look at anchor
+        CameraLookAtAnchor(Camera, MyCameraAnchor.transform.position);
+
+        if(Vector3.Distance(MyCameraAnchor.transform.position, position) < 1f)
+        {
+            nextState = new NormalCam(Camera);
+            stage = EVENT.EXIT;
+        }
     }
 
 }
