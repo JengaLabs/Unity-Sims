@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
 
     //Audio source object
     public AudioSource audioSourcePrefab;
+
     //Audio source pool
     private AudioSourcePool _AudioSourcePool;
 
@@ -21,6 +22,7 @@ public class SoundManager : MonoBehaviour
     //Input Events
     private InputClass InputEvents;
 
+    private GameEventManager _GameEvents;
 
     private void Awake()
     {
@@ -32,6 +34,12 @@ public class SoundManager : MonoBehaviour
 
         //Get sounds from sound file manager 
         Clips = _SoundsFilesManager.GetAudioClips();
+
+        //Get game events
+        _GameEvents = GameManager.Instance.GetGameEventManager();
+
+        //Listen for play sound event
+        _GameEvents.onPlaySound += PlaySound;
 
         //Get input class
         InputEvents = GameManager.Instance.GetInputClass();

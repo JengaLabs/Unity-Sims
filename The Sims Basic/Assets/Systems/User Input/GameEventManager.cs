@@ -7,6 +7,26 @@ public class GameEventManager
 
     #region Start Game
 
+    public delegate void StartGame();
+
+    public StartGame OnStartGame;
+
+
+    /// <summary>
+    /// Call to load any save files and create and new ones. 
+    /// </summary>
+    public void StartTheGame()
+    {
+        if(OnStartGame != null)
+        {
+            OnStartGame();
+        }
+        else
+        {
+            Debug.LogError("Nothing subscribed to load ahead of time.");
+        }
+    }
+
     #endregion
 
     #region End Game
@@ -16,13 +36,70 @@ public class GameEventManager
 
     #region Save / Load Game 
 
+    public delegate void OnSaveDevFiles();
+
+    /// <summary>
+    /// Listen for when save methods should be called.
+    /// </summary>
+    public OnSaveDevFiles OnSave;
+
+    /// <summary>
+    /// Call to save current game data
+    /// </summary>
+    public void SaveGame()
+    {
+        if(OnSave != null)
+        {
+            OnSave();
+        }
+        else
+        {
+            Debug.LogError("Dev files is not subscribed to save game event.");
+        }
+    }
+
+    public delegate void OnLoadDevFiles(string fileName);
+
+    public OnLoadDevFiles LoadDevFiles;
+
+    public void LoadGame(string fileName)
+    {
+        if(LoadDevFiles != null)
+        {
+            LoadDevFiles(fileName);
+        }
+        else
+        {
+            Debug.LogError("Loading subscribers missing");
+        }
+    }
 
 
     #endregion
 
     #region Menu Events
 
+    ///When a menu needs to be opened or closed.
+    public delegate void OnManipulateMenu(string menuName, bool hideStatus);
 
+    /// <summary>
+    /// Subscribe to listen to menu call events.
+    /// </summary>
+    public OnManipulateMenu manipulateMenu;
+
+    /// <summary>
+    /// Call a menu by name and open or close it. 
+    /// </summary>
+    /// <param name="menuName">The menu you want to manipulate.</param>
+    /// <param name="hideStatus">If menu should be shown or not.</param>
+    public void Manipulate_Menu(string menuName, bool hideStatus)
+    {
+        //Check for subsribers
+        if(manipulateMenu != null)
+        {
+            manipulateMenu(menuName, hideStatus);
+        }
+    }
 
     #endregion
 
@@ -55,6 +132,21 @@ public class GameEventManager
 
     #region Developer Commands
 
+    public delegate void OnInputString(string input);
+
+    public OnInputString onInputString;
+
+    public void SubmitInputString(string input)
+    {
+        if(onInputString != null)
+        {
+            onInputString(input);
+        }
+        else
+        {
+            Debug.LogError("No subribers to input string");
+        }
+    }
 
 
     #endregion
@@ -90,6 +182,33 @@ public class GameEventManager
     }
 
     #endregion
+
+    #region Time Manipulation
+
+    public delegate void SetGameSpeed(int gameSpeed);
+
+    /// <summary>
+    /// Listen for changes in game speed
+    /// </summary>
+    public SetGameSpeed changeGameSpeed;
+
+    /// <summary>
+    /// Change the gameSpeed to a given number.
+    /// </summary>
+    /// <param name="gameSpeed">Game speed to be set as. </param>
+    public void ChangeGameSpeed(int gameSpeed)
+    {
+        if(changeGameSpeed != null)
+        {
+            changeGameSpeed(gameSpeed);
+        }
+        else
+        {
+            Debug.LogError("Nothing subscribed to game speed");
+        }
+    }
+
+    #endregion 
 
 
     #endregion

@@ -9,6 +9,9 @@ public class ActionMenu : MonoBehaviour
     //Input events from user and game
     private InputClass InputEvents;
 
+    //Game events to lsiten for 
+    private GameEventManager _GameEvents;
+
     private UnityAction m_firstAction;
     
     //TEMP ACTION STORAGE
@@ -53,31 +56,35 @@ public class ActionMenu : MonoBehaviour
         //Get input class
         InputEvents = GameManager.Instance.GetInputClass();
 
-        //subsribe to action menu event
-        InputEvents.onClickedObject += OpenActionMenu;
+        _GameEvents = GameManager.Instance.GetGameEventManager();
+
+        _GameEvents.onSelectAnObject += OpenActionMenu;
+
 
         buttons = new List<Button>();
         Qbuttons = new Queue<Button>();
     }
 
 
-
-
-    private void OpenActionMenu(string objectName)
+    private void OpenActionMenu(GameObject selectedObject)
     {
-        InputEvents.PlaySound("Menu_Open_1");
-        //When menu is open, it should close when clicking another object that isnt a button
-        InputEvents.onClickedObject -= OpenActionMenu;
-        InputEvents.onClickedObject += ShutDownActionMenu;
+        //Play menu sound
+        _GameEvents.PlaySound("Menu_Open_1");
+
+        //Prevent another menu from opening
+        _GameEvents.onSelectAnObject -= OpenActionMenu;
+
+        //Subscribe to the close action menus
+        _GameEvents.onSelectAnObject += ShutDownActionMenu;
 
         //Get the objects actions names
-        currentObjectActionNames = _ObjectDataStorage.GetActions(objectName);
+        currentObjectActionNames = _ObjectDataStorage.GetActions(selectedObject.name);
 
         //Reset the current object actions
         currentObjectActions.Clear();
 
         //Loop through every action
-        foreach(string name in currentObjectActionNames)
+        foreach (string name in currentObjectActionNames)
         {
             //add every action by the name
             currentObjectActions.Add(_ActionsStoarge.GetActionByName(name));
@@ -92,22 +99,24 @@ public class ActionMenu : MonoBehaviour
 
     }
 
-
-    private void ShutDownActionMenu(string objectName = "")
+    private void ShutDownActionMenu(GameObject objectName)
     {
-
-        InputEvents.PlaySound("Menu_Close_2");
-
+        //Play the close menu sound
+        _GameEvents.onPlaySound("Menu_Close_2");
 
         //Set object as inactive
         this.gameObject.SetActive(false);
+        
         //Resubscribe to the opening event
-        InputEvents.onClickedObject += OpenActionMenu;
-        InputEvents.onClickedObject -= ShutDownActionMenu;
+        _GameEvents.onSelectAnObject += OpenActionMenu;
+        
+        //Unsubscribe from close event 
+        _GameEvents.onSelectAnObject -= ShutDownActionMenu;
 
         //Remove any action listenrs
         RemoveAllButtonsListeners();
     }
+
 
     /// <summary>
     /// For closing menu after clicking a action
@@ -125,8 +134,8 @@ public class ActionMenu : MonoBehaviour
             //Set object as inactive
             this.gameObject.SetActive(false);
             //Resubscribe to the opening event
-            InputEvents.onClickedObject += OpenActionMenu;
-            InputEvents.onClickedObject -= ShutDownActionMenu;
+            _GameEvents.onSelectAnObject+= OpenActionMenu;
+            _GameEvents.onSelectAnObject -= ShutDownActionMenu;
 
             //Remove any action listenrs
             RemoveAllButtonsListeners();
