@@ -38,7 +38,6 @@ public class InputClass
     //left click, returns bool if what was hit is a gui or clickable
     public delegate bool leftClickedGUI();
 
-    private GameObject _Selected;
 
     //Delegate for mouse down
     public delegate void OnGuiInput();
@@ -165,14 +164,7 @@ public class InputClass
     }
     #endregion
     
-    /// <summary>
-    /// Return the object selected by selected 
-    /// </summary>
-    /// <returns></returns>
-    public GameObject GetSelected()
-    {
-        return _Selected;
-    }
+    
 
 
     #region Sim Related Delegates  

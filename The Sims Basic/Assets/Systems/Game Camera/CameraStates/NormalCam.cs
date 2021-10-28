@@ -34,12 +34,9 @@ public class NormalCam : CameraState
     //Starting Mouse position
     Vector2 mouseOrigin;
     
-    //Store how zoomed in user is
-    float _CurrentZoomLevel = 10f;
+    
 
-    //Zoom limits
-    float farZoomLimit = 22f;
-    float nearZoomLimit = 1f;
+    
 
     //If mouse is being used to rotate camera
     bool orbitCamera = false;
@@ -59,6 +56,9 @@ public class NormalCam : CameraState
 
     public override void Enter()
     {
+        //Get game events manager
+        gameEventManager = GameManager.Instance.GetGameEventManager();
+
         //Obtain input class
         _InputClass = GameManager.Instance.GetInputClass();
 
@@ -72,10 +72,9 @@ public class NormalCam : CameraState
         CameraLookAtAnchor(cameraObject, anchorPoint);
 
         //Subcribe to input events needed
-        _InputClass.onNothingRightClicked += SwitchCameraOrbitBool;
+        gameEventManager.onNothingRightClicked += SwitchCameraOrbitBool;
 
-        _InputClass.onEscapeButton += PauseGame;
-
+        gameEventManager.onEscapeButton += PauseGame;
 
         //Move to update loop
         base.Enter();
@@ -93,23 +92,33 @@ public class NormalCam : CameraState
             return;
         }
 
-        //Check if camera should be orbiting
+        //Check if camera should be orbiting the anchor
         if (orbitCamera)
         {
             OrbitAnchor();
         }
 
-
-        LocalSmoothScroll();
-
-
-        //Wasd controls and shift multiplier
-        //BasicMovement();
-
-        //OrbitAnchor();
+        //Allow user to scroll in and out
+        LocalSmoothScroll(cameraObject);
 
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (IsMouseOverInteractable())
+            {
 
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            gameEventManager.CallClickedNothing();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameEventManager.EscapeButtonDown();
+        }
 
         //Switch to free cam
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -122,8 +131,8 @@ public class NormalCam : CameraState
 
     public override void Exit()
     {
-        _InputClass.onNothingRightClicked -= SwitchCameraOrbitBool;
-        _InputClass.onEscapeButton -= PauseGame;
+        gameEventManager.onNothingRightClicked -= SwitchCameraOrbitBool;
+        gameEventManager.onEscapeButton -= PauseGame;
     }
 
 
@@ -213,8 +222,6 @@ public class NormalCam : CameraState
 
             //Get mouse movement
             float xRot = Input.GetAxis("Mouse X");
-            //Rotate camera around anchor
-            //cameraObject.transform.RotateAround(myAnchor.transform.position, Vector3.up, xRot * Time.deltaTime * rotationMultiplier);
             //Rotate the anchor 
             myAnchor.transform.Rotate(Vector3.up, xRot);
 
@@ -228,6 +235,10 @@ public class NormalCam : CameraState
             //Set orbital bool to reverse
             SwitchCameraOrbitBool();
         }
+
+        
+        
+
     }
 
     
@@ -256,84 +267,7 @@ public class NormalCam : CameraState
 
     #endregion
 
-    #region Scroll Movements
-
-    /// <summary>
-    /// Depreciated, use as reference for future work
-    /// </summary>
-    private void ScrollInput()
-    {
-        //Get scroll wheel input
-        float scrollDistance = Input.mouseScrollDelta.y;
-
-        //Store orignal pos
-        Vector3 tempPos = cameraObject.transform.position;
-
-        int yMult = -10;
-        int xMult = -30;
-
-        //Store only x and z values of camera
-        Vector3 horizontalPlane = new Vector3(tempPos.x, anchorPoint.y, tempPos.z);
-
-        //Find direction between camera and anchor on xz plane
-        Vector3 dir = horizontalPlane - anchorPoint;
-        Vector3 Ndir = (dir).normalized;
-
-
-        cameraObject.transform.position += new Vector3(dir.x * xMult, yMult, dir.z * xMult) * Time.deltaTime * scrollDistance;
-
-        //.transform.Translate(new Vector3(dir.x * xMult, 0, dir.z * xMult) * Time.deltaTime * scrollDistance);
-        //cameraObject.transform.Translate(new Vector3(0, scrollDistance * yMult * forwardDistance.magnitude, 0) * Time.deltaTime);
-
-
-        //cameraObject.transform.Translate(new Vector3(0, scrollDistance * yMult, 0) * Time.deltaTime);
-        //cameraObject.transform.Translate(moveDir * xMult * scrollDistance * Time.deltaTime);
-
-        float dist = Vector3.Distance(anchorPoint, cameraObject.transform.position);
-        //Check distance is viable
-        if (dist > 50 || dist < 3)
-        {
-            Debug.Log("Distance not valid");
-            cameraObject.transform.position = tempPos;
-        }
-
-
-        //Reset view at anchor
-        CameraLookAtAnchor(cameraObject, anchorPoint);
-    }
-
-
-
-
-
-    private void LocalSmoothScroll()
-    {
-        //Get scroll wheel input either +1 or -1
-        float scrollDistance = Input.mouseScrollDelta.y;
-        //Take from current scroll distance level
-        _CurrentZoomLevel -= scrollDistance;
-        //Clamp the zoom value 
-        _CurrentZoomLevel = Mathf.Clamp(_CurrentZoomLevel, nearZoomLimit, farZoomLimit);
-
-        Vector3 newPos = new Vector3(cameraObject.transform.localPosition.x , Mathf.Pow(1.2f, _CurrentZoomLevel), -_CurrentZoomLevel * 1.2f);
-
-        //Check user scrolled
-        if (scrollDistance != 0)
-        {
-            //Scroll is inbound
-            if (_CurrentZoomLevel < farZoomLimit && _CurrentZoomLevel > nearZoomLimit)
-            {
-                //Debug.Log("Current zoom level is " + _CurrentZoomLevel);
-                //Move camera to new position
-                cameraObject.transform.localPosition = newPos;
-            }
-        }
-
-        //Reset view
-        CameraLookAtAnchor(cameraObject, anchorPoint);
-    }
-
-    #endregion
+    
 
 
     /// <summary>
@@ -352,7 +286,7 @@ public class NormalCam : CameraState
     public void PauseGame()
     {
         //Call all pause game methods
-        _InputClass.CallTogglePause();
+        gameEventManager.CallTogglePause();
 
         nextState = new CamPaused(cameraObject);
         stage = EVENT.EXIT;

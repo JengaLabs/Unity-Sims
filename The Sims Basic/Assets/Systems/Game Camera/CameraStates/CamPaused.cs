@@ -35,17 +35,14 @@ public class CamPaused : CameraState
         //Set world state to paused
         worldStates.AddState("World Paused", 1);
 
-        //Get reference to input class
-        _InputClass = GameManager.Instance.GetInputClass();
+        gameEventManager = GameManager.Instance.GetGameEventManager();
+
+
+        //Subscribe to method to resume game 
+        gameEventManager.onTogglePause += UnPause;
 
         //Subscribe method to game resume delegate 
-        _InputClass.onEscapeButton += TogglePause;
-
-        //Subscribe method to un pause game
-        _InputClass.onTogglePause += UnPause;
-
-
-        //Open settings 
+        gameEventManager.onEscapeButton += TogglePause;
 
 
         //Enter update loop
@@ -54,9 +51,9 @@ public class CamPaused : CameraState
 
     public override void Update()
     {
+
+
         
-
-
     }
 
     public override void Exit()
@@ -82,11 +79,11 @@ public class CamPaused : CameraState
     /// </summary>
     private void TogglePause()
     {
-        _InputClass.onEscapeButton -= TogglePause;
-        _InputClass.onTogglePause -= UnPause;
+        gameEventManager.onEscapeButton -= UnPause;
+        gameEventManager.onTogglePause -= TogglePause;
 
-        //Call all pause game methods
-        _InputClass.CallTogglePause();
+        //Call all pause game events
+        gameEventManager.CallTogglePause();
 
         ResumeGame();
     }
@@ -97,10 +94,8 @@ public class CamPaused : CameraState
     /// </summary>
     private void UnPause()
     {
-        _InputClass.onEscapeButton -= TogglePause;
-        _InputClass.onTogglePause -= UnPause;
-
-
+        gameEventManager.onEscapeButton -= TogglePause;
+        gameEventManager.onTogglePause -= UnPause;
 
         ResumeGame();
     }
