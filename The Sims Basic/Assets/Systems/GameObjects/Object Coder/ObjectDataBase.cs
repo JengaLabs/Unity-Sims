@@ -15,6 +15,8 @@ public class ObjectDataBase
 
     public ObjectDataBase()
     {
+        Debug.Log("Created object data base");
+
         //Storage for files 
         List<ObjectData> tempObjects = new List<ObjectData>();
 
@@ -26,16 +28,21 @@ public class ObjectDataBase
         //Get the save file
         tempObjects = _objectSaver.LoadCurrentFileData();
 
-        /*
+        
         ObjectData tempObject = new ObjectData("Enviroment");
         tempObject.actions.Add("Go Too");
         tempObjects.Add(tempObject);
-        */
+
+        tempObject = new ObjectData("Chair");
+        tempObject.actions.Add("Go Too");
+        tempObject.actions.Add("Sit Down");
+        tempObjects.Add(tempObject);
+
 
         //Add those objects to the dictionary
-        foreach(ObjectData obj in tempObjects)
+        foreach (ObjectData obj in tempObjects)
         {
-            //Debug.Log(obj.GetName());
+            Debug.Log(obj.GetName());
             
             //Add that object to the list
             AddObject(obj.GetName(), obj.actions);
@@ -109,7 +116,7 @@ public class ObjectDataBase
         }
         else
         {
-            //Debug.Log("Object Data Base does not contain " + objectId);
+            Debug.Log("Object Data Base does not contain " + objectId);
             return false;
         }
     }

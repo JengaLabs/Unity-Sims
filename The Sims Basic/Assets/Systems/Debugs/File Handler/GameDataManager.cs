@@ -46,6 +46,8 @@ public class GameDataManager : MonoBehaviour
         //Check if file exist
         if (File.Exists(saveFile))
         {
+            Debug.Log("game files exist");
+
             //Read file
             string fileContents = File.ReadAllText(saveFile);
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -228,7 +228,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a76f9cc3deea30d4bb202aa523cafd6c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a76f9cc3deea30d4bb202aa523cafd6c,
         type: 3}
@@ -283,7 +283,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a76f9cc3deea30d4bb202aa523cafd6c,
         type: 3}
       propertyPath: m_Name
-      value: Oven01
+      value: Oven
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a76f9cc3deea30d4bb202aa523cafd6c,
         type: 3}
@@ -293,7 +293,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a76f9cc3deea30d4bb202aa523cafd6c,
         type: 3}
       propertyPath: m_TagString
-      value: object
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a76f9cc3deea30d4bb202aa523cafd6c, type: 3}
@@ -316,7 +316,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 2.1253498, z: 1.5953295}
   m_Center: {x: 0.0493421, y: 0.1424964, z: -1.3210818}
---- !u!4 &64286829 stripped
+--- !u!4 &64286827 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a76f9cc3deea30d4bb202aa523cafd6c,
     type: 3}
@@ -878,7 +878,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3165728d74ae97745a2f089dc94c0d66,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3165728d74ae97745a2f089dc94c0d66,
         type: 3}
@@ -943,7 +943,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3165728d74ae97745a2f089dc94c0d66,
         type: 3}
       propertyPath: m_TagString
-      value: object
+      value: Chair
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3165728d74ae97745a2f089dc94c0d66, type: 3}
@@ -2633,8 +2633,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 64286827}
   - {fileID: 372223085}
-  - {fileID: 64286829}
   m_Father: {fileID: 197966289}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
