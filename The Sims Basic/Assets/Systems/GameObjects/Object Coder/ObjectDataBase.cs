@@ -15,7 +15,6 @@ public class ObjectDataBase
 
     public ObjectDataBase()
     {
-        Debug.Log("Created object data base");
 
         //Storage for files 
         List<ObjectData> tempObjects = new List<ObjectData>();
