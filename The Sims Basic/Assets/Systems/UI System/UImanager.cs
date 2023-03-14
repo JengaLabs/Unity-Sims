@@ -38,10 +38,10 @@ public class UImanager : MonoBehaviour
 
 
         //Hide the action menu
-        HideActionMenu();
+        //HideActionMenu();
 
         //Hide Dev console
-        HideConsole();
+        //HideConsole();
 
         //Pause event
         gameEventManager.onTogglePause += HideMenu;

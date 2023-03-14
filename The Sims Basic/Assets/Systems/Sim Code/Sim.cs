@@ -57,6 +57,9 @@ public class Sim : GAgent
 
     public void AddLocationGoal(Vector3 i)
     {
+        Debug.Log("Location goal given");
+
+
         //Add goal 
         beliefs.ModifyState("CommandGiven", 1);
 
