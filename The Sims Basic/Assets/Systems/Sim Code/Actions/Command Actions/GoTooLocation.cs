@@ -14,7 +14,6 @@ public class GoTooLocation : Action
     
     public override void Perform()
     {
-        Debug.Log("given command go to ");
         currentSim = GameManager.Instance.GetSelectedSim();
         //Add the object to the current sims inventory
         currentSim.AddLocationGoal(GameManager.Instance.GetInputClass().StoredLocation);

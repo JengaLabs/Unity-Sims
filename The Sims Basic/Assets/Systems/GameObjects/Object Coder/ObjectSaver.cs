@@ -23,9 +23,8 @@ public class ObjectSaver
         saveFileLocation = Application.persistentDataPath + objectFileName;
         if (File.Exists(saveFileLocation))
         {
-            Debug.Log(saveFileLocation);
             //Open up the file 
-            Debug.Log("File already exist");
+            //Debug.Log("File already exist");
         }
         else
         {
@@ -37,7 +36,7 @@ public class ObjectSaver
 
     public void SaveGameActions(List<ObjectData> objectdata)
     {
-        Debug.Log("Saving game data");
+
         dataList.dataList = objectdata;
         string stringData = JsonUtility.ToJson(dataList);
 
