@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System;
 
 
 //Class that saves onto a file the objects and actions associated to it. 
@@ -47,18 +46,8 @@ public class ObjectSaver
 
     public List<ObjectData> LoadCurrentFileData()
     {
-        string fileContents = "";
-
         //convert the file content to a string
-        try
-        {
-            fileContents = File.ReadAllText(saveFileLocation);
-        }
-        catch
-        {
-            Debug.Log("error");
-        }
-
+        string fileContents = File.ReadAllText(saveFileLocation);
 
         //Debug.Log(fileContents);
 

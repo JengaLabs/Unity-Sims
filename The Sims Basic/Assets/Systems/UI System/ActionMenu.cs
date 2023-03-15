@@ -153,8 +153,6 @@ public class ActionMenu : MonoBehaviour
 
     private void ButtonMethod()
     {
-
-
         //Call close menu sound
         InputEvents.PlaySound("Menu_Close_1");
 
