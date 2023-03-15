@@ -21,10 +21,11 @@ public class ObjectDataBase
         //Input class to listen to 
         _inputClass = GameManager.Instance.GetInputClass();
 
-        
 
         //Get the save file
         tempObjects = _objectSaver.LoadCurrentFileData();
+
+
 
         /*
         ObjectData tempObject = new ObjectData("Enviroment");
@@ -33,9 +34,8 @@ public class ObjectDataBase
         */
 
         //Add those objects to the dictionary
-        foreach(ObjectData obj in tempObjects)
+        foreach (ObjectData obj in tempObjects)
         {
-            //Debug.Log(obj.GetName());
             
             //Add that object to the list
             AddObject(obj.GetName(), obj.actions);

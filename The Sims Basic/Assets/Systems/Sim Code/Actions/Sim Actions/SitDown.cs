@@ -27,6 +27,8 @@ public class SitDown : GAction
             }
         }
 
+        
+
 
 
 
@@ -35,6 +37,13 @@ public class SitDown : GAction
 
     public override bool PostPerform()
     {
+
+        //Check if agent is close enough to use chair
+        if (agent.remainingDistance <= 1.5f)
+        {
+            Debug.Log("too far from chair"); 
+            return false;
+        } 
         //Remove the standing state
         beliefs.ModifyState("Standing", -1);
 

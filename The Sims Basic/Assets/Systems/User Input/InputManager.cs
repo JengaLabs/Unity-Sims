@@ -173,7 +173,7 @@ public class InputManager : MonoBehaviour
                     
                 case 8:
                     
-                    Debug.Log(hit.transform.gameObject.name + " this is an interactable");
+                    //Debug.Log(hit.transform.gameObject.name + " this is an interactable");
 
                     /*
                     SubGoal s3 = new SubGoal("Sitting", 1, true);
@@ -184,7 +184,7 @@ public class InputManager : MonoBehaviour
                     //Store location clicked and object 
                     _InputClass.StoredLocation = hit.point;
                     _InputClass.StoredObject = hit.transform.gameObject;
-
+                    
                     _InputClass.leftClickedGameObject(hit.transform.gameObject.name);
 
                     //Set object as selected one

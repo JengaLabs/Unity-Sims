@@ -79,6 +79,7 @@ public class ActionMenu : MonoBehaviour
         //Loop through every action
         foreach(string name in currentObjectActionNames)
         {
+            //Debug.Log("Object name " + name);
             //add every action by the name
             currentObjectActions.Add(_ActionsStoarge.GetActionByName(name));
         }
@@ -190,7 +191,7 @@ public class ActionMenu : MonoBehaviour
         //add actions to each button
         foreach (Action action in currentObjectActions)
         {
-            
+           // Debug.Log(action._ActionName);
             //Get the next button
             Button currentButton = Qbuttons.Dequeue();
 

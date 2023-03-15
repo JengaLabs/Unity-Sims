@@ -68,10 +68,11 @@ public class GAgent : MonoBehaviour
         if (currentAction != null && currentAction.running && currentAction.target)
         {
 
-            if (currentAction.agent.remainingDistance >= 3f)
+            if (currentAction.agent.remainingDistance >= 1f)
             {
                 if (currentAction.agent.hasPath == false)
                 {
+                    Debug.Log("No path to obj returning");
                     return;
                 }
             }

@@ -27,14 +27,26 @@ public class GetUp : GAction
             }
         }
 
-
-
+        
 
 
         return true;
     }
     public override bool PostPerform()
     {
+
+        if (agent.remainingDistance <= 1f)
+        {
+            Debug.Log("no where near chair to get off of");
+
+            return false;
+        }
+        else
+        {
+            Debug.Log("can get of f");
+
+        }
+
 
         Debug.Log("Getting Up");
         //Add chair back to useable objects

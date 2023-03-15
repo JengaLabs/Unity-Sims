@@ -24,7 +24,7 @@ public class ObjectSaver
         if (File.Exists(saveFileLocation))
         {
             //Open up the file 
-            //Debug.Log("File already exist");
+            Debug.Log("File already exist" + objectFileName);
         }
         else
         {
@@ -53,6 +53,7 @@ public class ObjectSaver
         //Check if empty
         if (fileContents == null || fileContents == "")  
         {
+            Debug.Log("empty save file");
             return new List<ObjectData>();
         }
 
