@@ -17,7 +17,7 @@ public class GameEventManager
     /// </summary>
     public void StartTheGame()
     {
-        if (OnStartGame != null)
+        if(OnStartGame != null)
         {
             OnStartGame();
         }
@@ -48,7 +48,7 @@ public class GameEventManager
     /// </summary>
     public void SaveGame()
     {
-        if (OnSave != null)
+        if(OnSave != null)
         {
             OnSave();
         }
@@ -64,7 +64,7 @@ public class GameEventManager
 
     public void LoadGame(string fileName)
     {
-        if (LoadDevFiles != null)
+        if(LoadDevFiles != null)
         {
             LoadDevFiles(fileName);
         }
@@ -95,7 +95,7 @@ public class GameEventManager
     public void Manipulate_Menu(string menuName, bool hideStatus)
     {
         //Check for subsribers
-        if (manipulateMenu != null)
+        if(manipulateMenu != null)
         {
             manipulateMenu(menuName, hideStatus);
         }
@@ -118,7 +118,7 @@ public class GameEventManager
 
     public void PlaySound(string soundName)
     {
-        if (onPlaySound != null)
+        if(onPlaySound != null)
         {
             onPlaySound(soundName);
         }
@@ -138,7 +138,7 @@ public class GameEventManager
 
     public void SubmitInputString(string input)
     {
-        if (onInputString != null)
+        if(onInputString != null)
         {
             onInputString(input);
         }
@@ -198,7 +198,7 @@ public class GameEventManager
     /// <param name="gameSpeed">Game speed to be set as. </param>
     public void ChangeGameSpeed(int gameSpeed)
     {
-        if (changeGameSpeed != null)
+        if(changeGameSpeed != null)
         {
             changeGameSpeed(gameSpeed);
         }
@@ -208,85 +208,8 @@ public class GameEventManager
         }
     }
 
-    #endregion
+    #endregion 
 
-    #region Toggle Pause
-    /// <summary>
-    /// Delegate that calls when game needs to toggle state
-    /// </summary>
-    public delegate void TogglePause();
-    /// <summary>
-    /// Delegate to sbuscribe to when listening for pause / resume
-    /// </summary>
-    public TogglePause onTogglePause;
-
-    public void CallTogglePause()
-    {
-        //Check for subscribers
-        if (onTogglePause != null)
-        {
-            onTogglePause();
-        }
-        else
-        {
-            Debug.Log("Nothing subscribed to toggle pause");
-        }
-    }
-    #endregion
-
-    #endregion
-
-    #region User Inputs 
-
-    #region Keyboard
-
-
-    /// <summary>
-    /// Delegate that calls when the button escape is pressed
-    /// </summary>
-    public delegate void EscapeButton();
-    /// <summary>
-    /// Delegate to subscribe to when listening for escape button
-    /// </summary>
-    public EscapeButton onEscapeButton;
-
-    public void EscapeButtonDown()
-    {
-        //check for subscribers
-        if (onEscapeButton != null)
-        {
-            onEscapeButton();
-        }
-    }
-
-    #endregion
-
-    #region Mouse
-
-    #region Nothing clicked delegate
-
-    /// <summary>
-    /// Delegate for when nothing is being clicked 
-    /// </summary>
-    public delegate void ClickedNothing();
-    //Delegate for objects to subscribe to 
-    public ClickedNothing onNothingRightClicked;
-    /// <summary>
-    /// Call on nothing clicked delegate
-    /// </summary>
-    public void CallClickedNothing()
-    {
-        //Check for subscribers
-        if (onNothingRightClicked != null)
-        {
-            onNothingRightClicked();
-        }
-    }
-
-    #endregion
-
-
-    #endregion
 
     #endregion
 

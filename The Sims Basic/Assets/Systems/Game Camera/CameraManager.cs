@@ -58,12 +58,10 @@ public class CameraManager : MonoBehaviour
 
         
     }
+
+
+
     
-    public void UnPause()
-    {
-        GameEventManager gameEventManager =
-        GameManager.Instance.GetGameEventManager();
-        gameEventManager.CallTogglePause();
-    }
+
 
 }

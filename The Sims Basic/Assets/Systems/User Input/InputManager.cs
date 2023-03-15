@@ -20,7 +20,8 @@ public class InputManager : MonoBehaviour
     Camera mainCamera;
 
 
-    
+    //That only cast rays against colliders in layer 2
+    //Bit shift the index of the layer (2) to get a bit mask
     int layerMask = 1 << 2;
 
     

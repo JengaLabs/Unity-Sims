@@ -14,17 +14,14 @@ public class UImanager : MonoBehaviour
 
     public Text textbox;
 
-
-    //Game events that report events
-    GameEventManager gameEventManager;
+    //Input class that input events are reported to 
+    InputClass _InputClass;
 
     private Sim sim;
     
 
     public void Start()
     {
-
-        gameEventManager = GameManager.Instance.GetGameEventManager();
         
         foreach (GameObject obj in GetChildren())
         {
@@ -34,8 +31,8 @@ public class UImanager : MonoBehaviour
         
         _stateCMD = new StateCMD(textbox);
 
-
-
+        //Get the input manager
+        _InputClass = GameManager.Instance.GetInputClass();
 
         //Hide the action menu
         HideActionMenu();
@@ -43,13 +40,13 @@ public class UImanager : MonoBehaviour
         //Hide Dev console
         HideConsole();
 
+        //subscribe to input classes
         //Pause event
-        gameEventManager.onTogglePause += HideMenu;
-        
-        //set a state for a menu event
-        gameEventManager.manipulateMenu += SetActiveStateForUI;
+        _InputClass.onTogglePause += HideMenu;
 
-        //Get current sim
+        //set a state for a menu event
+        _InputClass.manipulateMenu += SetActiveStateForUI;
+
         sim = GameManager.Instance.GetSelectedSim();
     }
 
