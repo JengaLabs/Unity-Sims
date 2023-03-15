@@ -11,9 +11,7 @@ public sealed class GameManager
     private static GameManager instance = new GameManager();
 
     //Class that holds all world states
-    private static WorldStates _World = new WorldStates();
-
-    private static GameEventManager _GameEvents = new GameEventManager();
+    private static WorldStates world = new WorldStates();
 
     //Hold the spawn point of the current world
     private static Vector3 CameraAnchorPoint = new Vector3(0, 5, 0);
@@ -25,7 +23,7 @@ public sealed class GameManager
     private static Sim SelectedSim = null;
 
     //Stores all object actions by object names
-    private static ObjectActionsStorage _ActionStorage = new ObjectActionsStorage();
+    private static ObjectActionsStorage ActionStorage = new ObjectActionsStorage();
 
     //Stores all object data
     private static ObjectDataBase ObjectDataBaseSystem = new ObjectDataBase();
@@ -72,7 +70,7 @@ public sealed class GameManager
 
     public ObjectActionsStorage GetActionsStorage()
     {
-        return _ActionStorage;
+        return ActionStorage;
     }
 
     /// <summary>
@@ -81,7 +79,7 @@ public sealed class GameManager
     /// <returns></returns>
     public WorldStates GetWorld()
     {
-        return _World;
+        return world;
     }
 
 
@@ -125,16 +123,6 @@ public sealed class GameManager
     }
 
     #endregion
-
-
-    /// <summary>
-    /// Get game events 
-    /// </summary>
-    /// <returns></returns>
-    public GameEventManager GetGameEventManager()
-    {
-        return _GameEvents;
-    }
 
     #endregion
 

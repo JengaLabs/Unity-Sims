@@ -71,7 +71,10 @@ public class NormalCam : CameraState
         //Move camera to correct position for a frame
         CameraLookAtAnchor(cameraObject, anchorPoint);
 
+       
+
         //Subcribe to input events needed
+        //Held right click 
         _InputClass.onNothingRightClicked += SwitchCameraOrbitBool;
 
         _InputClass.onEscapeButton += PauseGame;
