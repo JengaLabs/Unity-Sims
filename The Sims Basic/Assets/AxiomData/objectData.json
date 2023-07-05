@@ -1,1 +1,29 @@
-{"dataList":[{"objectId":"Chair","actions":["Sit Down"]},{"objectId":"Enviroment","actions":["Go Too"]}]}
+{
+  "dataList": [
+    {
+      "objectId": "Chair",
+      "actions": [
+        "Sit Down"
+      ]
+    },
+    {
+      "objectId": "Enviroment",
+      "actions": [
+        "Go Too"
+      ]
+    },
+    {
+      "objectId": "Bed",
+      "actions": [
+        "Sit Down"
+      ]
+    },
+    {
+      "objectId": "Enviroment",
+      "actions": [
+        "Go Too"
+      ]
+    }
+
+  ]
+}
