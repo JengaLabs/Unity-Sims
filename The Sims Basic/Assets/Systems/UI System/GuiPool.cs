@@ -34,6 +34,10 @@ public class GuiPool : MonoBehaviour
         }
 
 
+        Vector2 p1 = Vector2.zero;
+        Vector2 p2 = Vector2.zero;
+
+
         //Dictionary of pools
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
